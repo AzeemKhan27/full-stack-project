@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# don't want to share files/folder on gitHub
+
+node_modules/
+.env
+package-lock-json
+package.json
