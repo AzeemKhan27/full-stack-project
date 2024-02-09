@@ -1,0 +1,38 @@
+npm create vite@latest . // it used to create react app and vite is bundled or toolkit.we used(.) create app directly in current folder, don't ask name.
+npm install
+npm run dev
+
+npm i axios // we used this pakage to integrate API's 
+note : it provides more flexibility and better user experience, more functionality.
+
+eg: useEffect(() =>{
+    axios.get('http://localhost:5000/jokes')
+    .then((response) =>{                
+      setJokes(response.data)   //when we use axios we dont need to parse our data, becz axios do same automatically.
+    })
+    .catch((error)=>{
+      console.log(error.message);
+    })
+  })
+
+Cors = it is stand for "cross origin resourse sharing".
+notes : if frontend and backend both ports,url different or ip address, that time we got cors error in frontend.
+        we will have to allow origin our json data to authorise client.
+
+-------- Set Proxy in Vite -------------
+
+1- search "proxy vite" 
+2- add proxy code in "vite.config.js"
+
+
+---------Bad Practice but working --------------
+
+
+1- command for make build in frontend side.
+> npm run build
+
+2- copy dist folder from frontend and paste in backend side.
+
+3- write code in server.js backend side; 
+
+app.use(express.static('dist')) //dist is name and location of frontend dist build file.
