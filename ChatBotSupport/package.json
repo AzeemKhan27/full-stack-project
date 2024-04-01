@@ -4,5 +4,8 @@
   },
   "scripts": {
     "dev": "concurrently \"cd server && npm start\" \"cd client && npm run dev\""
+  },
+  "dependencies": {
+    "morgan": "^1.10.0"
   }
 }

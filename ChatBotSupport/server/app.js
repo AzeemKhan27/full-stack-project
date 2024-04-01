@@ -1,21 +1,17 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import connectDB from './db.js';
+import chatRoutes from './routes/chatRoutes.js';
+const PORT = process.env.PORT || 5000;
+
 const app = express();
-const mongoose = require('mongoose');
-const chatRoutes = require('./routes/chatRoutes');
-const cors = require('cors'); // Import the cors middleware
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost/chatbot', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.log('MongoDB connection error', err));
+// Connect to MongoDB
+connectDB();
 
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use(express.json());
-
 app.use('/api', chatRoutes);
 
-const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

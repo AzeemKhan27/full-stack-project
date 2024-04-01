@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const generateBotResponse = async (userMessage) => {
   const patterns = [
@@ -27,4 +27,4 @@ const submitUserSuggestion = async (userMessage) => {
   }
 };
 
-module.exports = { generateBotResponse, submitUserSuggestion };
+export { generateBotResponse, submitUserSuggestion };
