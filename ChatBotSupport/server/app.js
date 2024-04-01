@@ -1,17 +1,18 @@
-import express from 'express';
-import cors from 'cors';
-import connectDB from './db.js';
-import chatRoutes from './routes/chatRoutes.js';
-const PORT = process.env.PORT || 5000;
+import OpenAI from 'openai';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const app = express();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // defaults to process.env["OPENAI_API_KEY"]
+});
 
-// Connect to MongoDB
-connectDB();
+async function main() {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: 'Say this is a test' }],
+    model: 'gpt-3.5-turbo',
+  });
 
-app.use(cors());
-app.use(express.json());
-app.use('/api', chatRoutes);
+  console.log(completion.choices);
+}
 
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+main();

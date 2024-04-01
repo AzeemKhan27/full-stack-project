@@ -1,9 +1,9 @@
-import express from 'express';
-import chatController from '../controllers/chatController';
+// import express from 'express';
+// import chatController from '../controllers/chatController';
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/chat', chatController.handleMessage);
-router.get('/chat', chatController.getMessages);
+// router.post('/chat', chatController.submitUserSuggestion);
+// router.get('/chat', chatController.generateBotResponse);
 
-export default router;
+// export default router;

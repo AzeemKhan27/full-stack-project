@@ -1,30 +1,27 @@
-import axios from 'axios';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
-const generateBotResponse = async (userMessage) => {
-  const patterns = [
-    { pattern: /^hi|hello|hey$/i, response: 'Hello there!' },
-    { pattern: /^how are you?$/i, response: 'I\'m doing well, thank you for asking!' },
-    { pattern: /^what is your name?$/i, response: 'My name is ChatBot.' },
-  ];
+// import { Configuration, OpenAIApi } from "openai";
 
-  const matchedPattern = patterns.find((pattern) => pattern.pattern.test(userMessage));
-  if (matchedPattern) {
-    return matchedPattern.response;
-  } else {
-    // If no pattern matches, submit user suggestion to external API
-    const response = await submitUserSuggestion(userMessage);
-    return response.data.message;
-  }
-};
+// const configuration = new Configuration({
+//   apiKey : process.env.OPENAI_API_KEY,
+// });
 
-const submitUserSuggestion = async (userMessage) => {
-  try {
-    const response = await axios.post('https://example.com/api/suggestions', { message: userMessage });
-    return response;
-  } catch (error) {
-    console.error('Error submitting user suggestion:', error);
-    throw new Error('Failed to submit user suggestion');
-  }
-};
+// const openai = new OpenAIApi(configuration);
 
-export { generateBotResponse, submitUserSuggestion };
+// async function callChatGPT(text){
+//   try {
+//     const completion = await openai.createCompletion({
+//       model : "text-davinci-003",
+//       prompt : text,
+//       max_tokens : 3000
+    
+//     });
+    
+//     console.log(completion.choices[0].text);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
+
+// await callChatGPT("what is redis")
