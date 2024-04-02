@@ -1,0 +1,87 @@
+# Node modules
+node_modules/
+
+# Package-lock files (adjust based on your package manager)
+package-lock.json
+yarn.lock
+
+# Build output directories (adjust based on your build tools)
+build/
+dist/
+out/
+
+# Testing environment variables
+.env.test.local
+
+# Development environment variables
+.env.development.local
+
+# Optional: Production environment variables
+.env.production.local  # Only ignore if not using a separate file
+
+# Temporary files and logs
+logs/*.log
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Coverage reports
+coverage/
+
+# Caching directories
+.cache/
+
+# Temporary npm cache (optional)
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Yarn v2 specific cache and unplugged directories
+yarn/cache
+yarn/unplugged
+yarn/build-state.yml
+
+# Tailwind CSS cache (adjust if using a different CSS-in-JS solution)
+.tailwindcss.cache
+
+# Vite cache (adjust if using a different bundler)
+node_modules/.vite/
