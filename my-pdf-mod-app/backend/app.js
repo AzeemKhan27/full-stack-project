@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './db.js';
 import pdfRoutes from './routes/pdfRoutes.js';
+import bodyParser from 'body-parser';
 
 // Connect to MongoDB
 connectDB();
@@ -20,6 +21,7 @@ app.use('/api/pdf', pdfRoutes);
 import config from './config.js'; 
 
 const PORT = config.port || 5000;
+app.use(bodyParser.json());
 const HOST = '0.0.0.0'; // Specify your desired IP address here
 
 app.listen(PORT, HOST, () => {
