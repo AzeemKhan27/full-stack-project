@@ -7,10 +7,12 @@ console.log("ENDPOINT_API_URL :", ENDPOINT_API_URL)
 
 export const modifyPdf = async (formData) => {
     try {
-      const response = await fetch(`${BASE_API_URL}${ENDPOINT_API_URL}`, {
-        method: 'POST',
+      // const response = await fetch(`${BASE_API_URL}${ENDPOINT_API_URL}`, {
+      const response = await fetch("http://localhost:5000/api/pdf/modify-pdf", {
+        method: 'PUT',
         body: formData,
       });
+      console.log("RESPONSE : ",response)
       if (!response.ok) {
         throw new Error('Failed to modify PDF');
       }
