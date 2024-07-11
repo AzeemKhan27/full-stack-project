@@ -71,5 +71,5 @@ mailQueue.process(async (job) => {
 //   }
 // })();
 
-module.exports = mailQueue;
+export default mailQueue;
 

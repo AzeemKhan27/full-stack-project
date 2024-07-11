@@ -11,4 +11,8 @@ const mailScheduleSchema = new mongoose.Schema({
   jobId: { type: String, required: true } // store Bull job ID
 });
 
-module.exports = mongoose.model('MailSchedule', mailScheduleSchema);
+// module.exports = mongoose.model('MailSchedule', mailScheduleSchema);
+
+const MailSchedule = mongoose.model("MailSchedule", mailScheduleSchema);
+
+export default MailSchedule;

@@ -1,19 +1,19 @@
-import MailSchedule  from './model/mailSchedule.model.js';
+import MailSchedule  from '../models/mailSchedule.model.js';
 import multer from 'multer';
 
-import redisClient from './config/redisClient.js';
-import mailQueue from './utils/mailQueue.utils.js';
+import redisClient from '../config/redisClient.js';
+import mailQueue from '../utils/mailQueue.utils.js';
 
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "./utils/ApiError.js";
-import { ApiResponse } from "./utils/ApiResponse.js"
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js"
 
 import  jwt  from "jsonwebtoken"
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -45,13 +45,14 @@ const generateCronExpression = (frequency, sendTime) => {
 
 //exports.scheduleMail = async ({body:{ senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate },file:{path}}, res) => {
 // const scheduleMail = asyncHandler(async({body:{ senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate },file:{path}}, res) => {
-// const scheduleMail = asyncHandler(async(req, res) => {
-exports.scheduleMail = asyncHandler(async(req, res) => {
+export const scheduleMail = asyncHandler(async(req, res) => {
     let { senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate } = req.body;
 
   try {
     const filePath = req.file ? req.file.path : null;
     const schedule = generateCronExpression(frequency, sendTime);
+
+    console.log("BODY ->",req.body)
 
     const job = await mailQueue.add(
       {
@@ -65,6 +66,8 @@ exports.scheduleMail = asyncHandler(async(req, res) => {
         repeat: { cron: schedule, endDate: new Date(endDate) },
       }
     );
+
+    console.log("======>JOB ->",job)
 
     if(!job){
         //   throw new ApiError(400, 'Failed to schedule mail, Invalid time');
@@ -95,7 +98,8 @@ exports.scheduleMail = asyncHandler(async(req, res) => {
 
 });
 
-exports.cancelMail = async (req, res) => {
+
+export const cancelMail = asyncHandler(async(req, res) => {
   try {
     const { jobId } = req.body;
 
@@ -112,9 +116,9 @@ exports.cancelMail = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+});
 
-exports.listScheduledMails = async (req, res) => {
+export const listScheduledMails = asyncHandler(async(req, res) => {
   try {
     const { senderEmail } = req.query;
 
@@ -125,10 +129,16 @@ exports.listScheduledMails = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+});
 
-exports.uploadFile = upload.single('file');
+const uploadFile = upload.single('file');
 
+export default{
+  scheduleMail,
+  cancelMail,
+  listScheduledMails,
+  uploadFile
+}
 
 
 
