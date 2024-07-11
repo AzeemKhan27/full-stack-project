@@ -86,11 +86,11 @@ exports.scheduleMail = asyncHandler(async(req, res) => {
 
     return res
             .status(201)
-            .json(new ApiResponse(201,message: 'Mail scheduled successfully', jobId: job.id ));
+            .json(new ApiResponse(201,'Mail scheduled successfully', {jobId: job.id} ));
 
   } catch (error) {
     console.error('Error scheduling mail:', error);
-    return res.status(500).json(new ApiError(500, error: error.message ));
+    return res.status(500).json(new ApiError(500, error.message ));
   }
 
 });
