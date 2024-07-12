@@ -7,13 +7,14 @@ import mailQueue from '../utils/mailQueue.utils.js';
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
+import moment from 'moment';
 
 import  jwt  from "jsonwebtoken"
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads');
+    cb(null, '.');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -22,8 +23,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+let isScheduledTimeLargerThanCurrentTime;
 const generateCronExpression = (frequency, sendTime) => {
+
   const [hour, minute] = sendTime.split(':').map(Number);
+
+  const scheduleDate = new Date();
+  scheduleDate.setHours(hour, minute, 0, 0); // Set hours, minutes, seconds, and milliseconds
+
+  isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();  // checking scheduleTime to current time;
+
   const cronMinute = minute || 0;
   let cronExpression;
 
@@ -43,16 +52,12 @@ const generateCronExpression = (frequency, sendTime) => {
   return cronExpression;
 };
 
-//exports.scheduleMail = async ({body:{ senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate },file:{path}}, res) => {
-// const scheduleMail = asyncHandler(async({body:{ senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate },file:{path}}, res) => {
 export const scheduleMail = asyncHandler(async(req, res) => {
     let { senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate } = req.body;
 
   try {
     const filePath = req.file ? req.file.path : null;
     const schedule = generateCronExpression(frequency, sendTime);
-
-    console.log("BODY ->",req.body)
 
     const job = await mailQueue.add(
       {
@@ -67,11 +72,8 @@ export const scheduleMail = asyncHandler(async(req, res) => {
       }
     );
 
-    console.log("======>JOB ->",job)
-
-    if(!job){
-        //   throw new ApiError(400, 'Failed to schedule mail, Invalid time');
-        return res.status(500).json(new ApiError(500, 'Failed to schedule mail, Invalid time'));
+    if(isScheduledTimeLargerThanCurrentTime == false){
+        return res.status(500).json(new ApiResponse(500, 'Failed to schedule mail, Invalid time'));
     }
  
     const mailSchedule = await MailSchedule.create({
