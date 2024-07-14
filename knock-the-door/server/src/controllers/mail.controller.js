@@ -7,6 +7,7 @@ import mailQueue from '../utils/mailQueue.utils.js';
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
+// import generateCronExpression  from "../utils/cron-expression.utils.js"
 import moment from 'moment';
 
 import  jwt  from "jsonwebtoken"
@@ -27,11 +28,10 @@ let isScheduledTimeLargerThanCurrentTime;
 const generateCronExpression = (frequency, sendTime) => {
 
   const [hour, minute] = sendTime.split(':').map(Number);
-
   const scheduleDate = new Date();
-  scheduleDate.setHours(hour, minute, 0, 0); // Set hours, minutes, seconds, and milliseconds
+  scheduleDate.setHours(hour, minute, 0, 0);
 
-  isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();  // checking scheduleTime to current time;
+  isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();
 
   const cronMinute = minute || 0;
   let cronExpression;
@@ -57,8 +57,9 @@ export const scheduleMail = asyncHandler(async(req, res) => {
 
   try {
     const filePath = req.file ? req.file.path : null;
+    // const { schedule, isScheduledTimeLargerThanCurrentTime } = generateCronExpression(frequency, sendTime);
     const schedule = generateCronExpression(frequency, sendTime);
-
+    
     const job = await mailQueue.add(
       {
         senderEmail,
@@ -72,6 +73,7 @@ export const scheduleMail = asyncHandler(async(req, res) => {
       }
     );
 
+   
     if(isScheduledTimeLargerThanCurrentTime == false){
         return res.status(500).json(new ApiResponse(500, 'Failed to schedule mail, Invalid time'));
     }

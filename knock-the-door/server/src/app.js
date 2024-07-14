@@ -19,9 +19,11 @@ app.use(cookieParser());
 
 //Routes Import
 import emailRoute from "./routes/mail.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 //Routes Declaration
 app.use("/api/v1/mails",emailRoute);
+app.use("/api/v1/users",userRoutes);
 
 
 export { app }

@@ -52,29 +52,29 @@ mailQueue.process(async (job) => {
 });
 
 // Test sending an email immediately
-(async () => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: MAIL_HOST,
-      port: MAIL_PORT,
-      secure: false, // Use true for port 465
-      auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS,
-      },
-    });
+// (async () => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       host: MAIL_HOST,
+//       port: MAIL_PORT,
+//       secure: false, // Use true for port 465
+//       auth: {
+//         user: EMAIL_USER,
+//         pass: EMAIL_PASS,
+//       },
+//     });
 
-    const info = await transporter.sendMail({
-      from: `"azeemdeveloper27@gmail.com" <${EMAIL_USER}>`,
-      to: "erazeem.career27@gmail.com",
-      subject: "Test Email",
-      text: "This is a test email.",
-    });
-    console.log("Test Email sent:", info.response);
-  } catch (error) {
-    console.error("Error sending test email:", error);
-  }
-})();
+//     const info = await transporter.sendMail({
+//       from: `"azeemdeveloper27@gmail.com" <${EMAIL_USER}>`,
+//       to: "erazeem.career27@gmail.com",
+//       subject: "Test Email",
+//       text: "This is a test email.",
+//     });
+//     console.log("Test Email sent:", info.response);
+//   } catch (error) {
+//     console.error("Error sending test email:", error);
+//   }
+// })();
 
 export default mailQueue;
 
