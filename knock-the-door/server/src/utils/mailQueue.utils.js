@@ -1,18 +1,10 @@
-
-
 import Queue  from 'bull';
 import nodemailer from 'nodemailer';
-import redisClient from '../config/redisClient.js';
 
 const EMAIL_USER = process.env.MAIL_USER;
 const EMAIL_PASS = process.env.MAIL_PASS;
 const MAIL_HOST = process.env.MAIL_HOST || 'smtp.gmail.com';
 const MAIL_PORT = process.env.MAIL_PORT || 587;
-
-console.log("User : ",EMAIL_USER)
-console.log("EMAIL_USER",EMAIL_USER);
-console.log("MAIL_HOST",MAIL_HOST);
-console.log("MAIL_PORT",MAIL_PORT);
 
 const mailQueue = new Queue('mailQueue', {
   redis: {

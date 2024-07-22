@@ -5,54 +5,16 @@ import mailQueue from '../utils/mailQueue.utils.js';
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
-import { upload } from '../middlewares/multer.middleware.js';
-
-
-let isScheduledTimeLargerThanCurrentTime;
-const generateCronExpression = (frequency, sendTime) => {
-  console.log("=======> Setime : ", sendTime);
-
-  if (!sendTime) {
-    throw new ApiError(400, "Invalid send time and send time is required.");
-  }
-
-  const [hour, minute] = sendTime.split(':').map(Number);
-  const scheduleDate = new Date();
-  scheduleDate.setHours(hour, minute, 0, 0);
-
-  const isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();
-
-  const cronMinute = minute || 0;
-  let cronExpression;
-
-  if (frequency.endsWith('day')) {
-    const days = parseInt(frequency);
-    cronExpression = `${cronMinute} ${hour} */${days} * *`;
-  } else if (frequency.endsWith('week')) {
-    const weeks = parseInt(frequency);
-    cronExpression = `${cronMinute} ${hour} * * ${Array.from({ length: 7 }, (_, i) => i % weeks === 0 ? i : null).filter(i => i !== null).join(',')}`;
-  } else if (frequency.endsWith('month')) {
-    const months = parseInt(frequency);
-    cronExpression = `${cronMinute} ${hour} 1 */${months} *`;
-  } else {
-    throw new Error('Invalid frequency');
-  }
-
-  return { cronExpression, isScheduledTimeLargerThanCurrentTime };
-};
+import { generateCronExpression } from '../utils/cron-expression.utils.js';
 
 export const scheduleMail = asyncHandler(async(req, res) => {
     let { senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate } = req.body;
 
-    console.log("BODY : ", req.body)
-
   try {
     const filePath = req.file ? req.file.path : null;
-    // const { schedule, isScheduledTimeLargerThanCurrentTime } = generateCronExpression(frequency, sendTime);
-    // const schedule = generateCronExpression(frequency, sendTime);
+
     const { cronExpression, isScheduledTimeLargerThanCurrentTime } = generateCronExpression(frequency, sendTime);
 
-    
     const job = await mailQueue.add(
       {
         senderEmail,
@@ -68,7 +30,7 @@ export const scheduleMail = asyncHandler(async(req, res) => {
 
    
     if(!isScheduledTimeLargerThanCurrentTime){
-        return res.status(500).json(new ApiError(401, isScheduledTimeLargerThanCurrentTime,"Failed to schedule mail, Invalid time"));
+        return res.status(500).json(new ApiError(401, {},"Failed to schedule mail, Invalid time"));
     }
  
     const mailSchedule = await MailSchedule.create({
@@ -84,17 +46,13 @@ export const scheduleMail = asyncHandler(async(req, res) => {
 
     await redisClient.hSet('jobs', job.id, JSON.stringify(mailSchedule));
 
-    return res
-            .status(201)
-            .json(new ApiResponse(201,'Mail scheduled successfully', {jobId: job.id} ));
+    return res.status(201).json(new ApiResponse(201,{jobId: job.id},'Mail scheduled successfully'));
 
   } catch (error) {
-    console.error('Error scheduling mail:', error);
-    return res.status(500).json(new ApiError(500, error.message ));
+    return res.status(500).json(new ApiError(500, error, error.message ));
   }
 
 });
-
 
 export const cancelMail = asyncHandler(async(req, res) => {
   try {
@@ -106,15 +64,16 @@ export const cancelMail = asyncHandler(async(req, res) => {
       await job.remove();
       await MailSchedule.findOneAndDelete({ jobId });
       await redisClient.hDel('jobs', job.id);
-      return res.status(200).json({ message: 'Mail schedule canceled successfully' });
+      return res.status(201).json(new ApiResponse(201,{jobId: job.id},'Mail scheduled successfully'));
     } else {
-      return res.status(404).json({ message: 'Job not found' });
-    }
+      return res.status(404).json(new ApiError(500, job, "Job not found" ));
+    } 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json(new ApiError(500, error, error.message ));
   }
 });
 
+//while testing this api call, sometimes making issues
 export const listScheduledMails = asyncHandler(async(req, res) => {
   try {
     const { senderEmail } = req.query;
@@ -122,19 +81,25 @@ export const listScheduledMails = asyncHandler(async(req, res) => {
     const jobs = await redisClient.hGetAll('jobs');
 
     const filteredJobs = Object.values(jobs || {}).filter(job => JSON.parse(job).senderEmail === senderEmail);
-    return res.status(200).json(filteredJobs.map(job => JSON.parse(job)));
+    console.log("LOGGGG: ",filteredJobs)
+
+    const responseMessage = filteredJobs.length === 0 
+    ? "No data found with the given email ID."
+    : "Filtered data found.";
+
+  return res.status(filteredJobs.length === 0 ? 404 : 200).json(new ApiResponse(filteredJobs.length === 0 ? 404 : 200, responseMessage, filteredJobs.length === 0 ? undefined : filteredJobs.map(job => JSON.parse(job))));
+
+    //return res.status(200).json(new ApiResponse(200,filteredJobs.map(job => JSON.parse(job)),(filteredJobs == null ? "data found with your given mail id." : "filtered data found.")));
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json(new ApiError(500, error, error.message ));
   }
 });
 
-const uploadFile = upload.single('file');
 
 export default{
   scheduleMail,
   cancelMail,
-  listScheduledMails,
-  uploadFile
+  listScheduledMails
 }
 
 

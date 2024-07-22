@@ -1,12 +1,16 @@
+import { ApiError } from './ApiError.js';
 
-const generateCronExpression = (frequency, sendTime) => {
+export const generateCronExpression = (frequency, sendTime) => {
+
+  if (!sendTime) {
+    return resizeBy.status(400).json(new ApiError(400,{},"Invalid send time and send time is required."));
+  }
 
   const [hour, minute] = sendTime.split(':').map(Number);
-
   const scheduleDate = new Date();
-  scheduleDate.setHours(hour, minute, 0, 0); // Set hours, minutes, seconds, and milliseconds
+  scheduleDate.setHours(hour, minute, 0, 0);
 
-  const isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();  // checking scheduleTime to current time;
+  const isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();
 
   const cronMinute = minute || 0;
   let cronExpression;
@@ -21,10 +25,8 @@ const generateCronExpression = (frequency, sendTime) => {
     const months = parseInt(frequency);
     cronExpression = `${cronMinute} ${hour} 1 */${months} *`;
   } else {
-    throw new Error('Invalid frequency');
+    return res.status(400).json(new ApiError(`Invalid frequency`));
   }
 
-  return {cronExpression, isScheduledTimeLargerThanCurrentTime};
+  return { cronExpression, isScheduledTimeLargerThanCurrentTime };
 };
-
-export default generateCronExpression;

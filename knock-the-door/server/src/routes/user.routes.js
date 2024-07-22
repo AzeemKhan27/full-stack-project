@@ -13,7 +13,7 @@ router.route("/register").post(
     )
 
 router.route("/login").post(loginUser);
-//secured routes
+//secured routes    
 router.route("/logout").post(verifyJWT, logoutUser)  // "verifyJWT" this middleware verify token by Id.
 router.route("/refresh-token").post(refreshAccessToken) // here we are verifying the refresh token
 router.route("/change-password").post(verifyJWT,changePassword)
