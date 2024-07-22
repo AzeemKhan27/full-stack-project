@@ -30,7 +30,6 @@ const generateAccessAndRefreshToken = async(userId) => {
 const registerUser = asyncHandler( async (req,res) => {
 
     const {username,email,fullName,password} = req.body;
-    console.log(username,email,fullName,password);
 
     if([username,email,fullName,password].some((field) => field?.trim() === "")){
         throw new ApiError(400,"All field are required.");
@@ -40,11 +39,11 @@ const registerUser = asyncHandler( async (req,res) => {
         $or:[{username},{email}]
     });
 
+
     if(existingUser){
         throw new ApiError(400,"Username or Email already exists.");
     }
 
-    const profileImageLocalPath = req.files?.profileImage[0]?.path;
 
     if(!profileImageLocalPath){
         throw new ApiError(400, "Profile Image is required.");
@@ -64,31 +63,33 @@ const registerUser = asyncHandler( async (req,res) => {
         profileImage : profileImage.url || "",
     });
 
-    // const createdUser = await User.findById(user._id).select(
-    //     "-refreshToken -password"
-    // );
 
-    const createUser = await User.aggregate([
-        {
-            $match:{
-                _id:user._id
-            }
-        },
+    const createdUser = await User.findById(user._id).select(
+        "-refreshToken -password"
+    );
 
-        {
-            $project:{
-                refreshToken: 0, 
-                password: 0 
-            }
-        }
-    ]).then(createUsers => createUsers[0]);
 
-    if(!createUser){
+    // const createdUser = await User.aggregate([
+    //     {
+    //         $match:{
+    //             _id:user._id
+    //         }
+    //     },
+
+    //     {
+    //         $project:{
+    //             refreshToken: 0, 
+    //             password: 0 
+    //         }
+    //     }
+    // ]).then(createdUsers => createdUsers[0]);
+
+    if(!createdUser){
         throw new ApiError(500,"Something went wrong while registering the user.")
     }
 
     return res.status(201).json(
-       new ApiResponse(200, createUser, "User created successfully.")
+       new ApiResponse(200, createdUser, "User created successfully.")
     )
 
 });
@@ -174,19 +175,23 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "username or email is required.");
     }
 
-    const user = await User.aggregate([
-        {
-            $match: {
-                $or: [{ email }, { username }],
-            },
-        },
-        {
-            $project: {
-                refreshToken: 0,
-                password: 0,
-            },
-        },
-    ]).then((users) => users[0]);
+    // const user = await User.aggregate([
+    //     {
+    //         $match: {
+    //             $or: [{ email }, { username }],
+    //         },
+    //     },
+    //     {
+    //         $project: {
+    //             refreshToken: 0,
+    //             password: 0,
+    //         },
+    //     },
+    // ]).then((users) => users[0]);
+
+    const user = await User.findOne({
+        $or:[{email},{username}]
+    })
 
     if (!user) {
         throw new ApiError(400, "User not found");
