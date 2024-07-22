@@ -1,37 +1,26 @@
 import MailSchedule  from '../models/mailSchedule.model.js';
-import multer from 'multer';
-
 import redisClient from '../config/redisClient.js';
 import mailQueue from '../utils/mailQueue.utils.js';
 
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
-// import generateCronExpression  from "../utils/cron-expression.utils.js"
-import moment from 'moment';
+import { upload } from '../middlewares/multer.middleware.js';
 
-import  jwt  from "jsonwebtoken"
-
-// Configure multer for file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '.');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
 
 let isScheduledTimeLargerThanCurrentTime;
 const generateCronExpression = (frequency, sendTime) => {
+  console.log("=======> Setime : ", sendTime);
+
+  if (!sendTime) {
+    throw new ApiError(400, "Invalid send time and send time is required.");
+  }
 
   const [hour, minute] = sendTime.split(':').map(Number);
   const scheduleDate = new Date();
   scheduleDate.setHours(hour, minute, 0, 0);
 
-  isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();
+  const isScheduledTimeLargerThanCurrentTime = scheduleDate.getTime() > Date.now();
 
   const cronMinute = minute || 0;
   let cronExpression;
@@ -49,16 +38,20 @@ const generateCronExpression = (frequency, sendTime) => {
     throw new Error('Invalid frequency');
   }
 
-  return cronExpression;
+  return { cronExpression, isScheduledTimeLargerThanCurrentTime };
 };
 
 export const scheduleMail = asyncHandler(async(req, res) => {
     let { senderEmail, receiverEmails, subject, text, frequency, sendTime, endDate } = req.body;
 
+    console.log("BODY : ", req.body)
+
   try {
     const filePath = req.file ? req.file.path : null;
     // const { schedule, isScheduledTimeLargerThanCurrentTime } = generateCronExpression(frequency, sendTime);
-    const schedule = generateCronExpression(frequency, sendTime);
+    // const schedule = generateCronExpression(frequency, sendTime);
+    const { cronExpression, isScheduledTimeLargerThanCurrentTime } = generateCronExpression(frequency, sendTime);
+
     
     const job = await mailQueue.add(
       {
@@ -69,13 +62,13 @@ export const scheduleMail = asyncHandler(async(req, res) => {
         filePath,
       },
       {
-        repeat: { cron: schedule, endDate: new Date(endDate) },
+        repeat: { cron: cronExpression, endDate: new Date(endDate) },
       }
     );
 
    
-    if(isScheduledTimeLargerThanCurrentTime == false){
-        return res.status(500).json(new ApiResponse(500, 'Failed to schedule mail, Invalid time'));
+    if(!isScheduledTimeLargerThanCurrentTime){
+        return res.status(500).json(new ApiError(401, isScheduledTimeLargerThanCurrentTime,"Failed to schedule mail, Invalid time"));
     }
  
     const mailSchedule = await MailSchedule.create({
@@ -84,7 +77,7 @@ export const scheduleMail = asyncHandler(async(req, res) => {
       subject,
       text,
       filePath,
-      schedule,
+      schedule:cronExpression,
       endDate,
       jobId: job.id, // Store Bull job ID
     });
@@ -113,9 +106,9 @@ export const cancelMail = asyncHandler(async(req, res) => {
       await job.remove();
       await MailSchedule.findOneAndDelete({ jobId });
       await redisClient.hDel('jobs', job.id);
-      res.status(200).json({ message: 'Mail schedule canceled successfully' });
+      return res.status(200).json({ message: 'Mail schedule canceled successfully' });
     } else {
-      res.status(404).json({ message: 'Job not found' });
+      return res.status(404).json({ message: 'Job not found' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -129,9 +122,9 @@ export const listScheduledMails = asyncHandler(async(req, res) => {
     const jobs = await redisClient.hGetAll('jobs');
 
     const filteredJobs = Object.values(jobs || {}).filter(job => JSON.parse(job).senderEmail === senderEmail);
-    res.status(200).json(filteredJobs.map(job => JSON.parse(job)));
+    return res.status(200).json(filteredJobs.map(job => JSON.parse(job)));
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
