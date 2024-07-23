@@ -4,6 +4,10 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
 
+
+    otp: { type: String, default: null }, // OTP as a string
+    otpExpiry: { type: Date, default: null }, 
+
     username : {
         type : String,
         required : true,
@@ -23,7 +27,7 @@ const userSchema = new mongoose.Schema({
 
        fullName : {
         type : String,
-        required : true,
+        // required : true,
         trim : true,
         index : true
        },
@@ -34,7 +38,7 @@ const userSchema = new mongoose.Schema({
 
        password : {
         type : String,
-        required : true
+        // required : true
        },
 
         refreshToken : {
