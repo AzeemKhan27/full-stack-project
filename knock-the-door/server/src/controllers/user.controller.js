@@ -3,7 +3,8 @@ import { ApiError } from "../utils/ApiError.js"
 import { User } from "../models/user.model.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import  jwt  from "jsonwebtoken"
-import { uploadOnCloudinary } from "../utils/cloudinary.utils.js"
+import { uploadOnCloudinary } from "../utils/cloudinary.utils.js";
+import {generateOtp, sendOtpEmail} from "../utils/generateOtp_utils.js"
 
 
 // making method for generate and refresh tokens because it will increase reusability of code.
@@ -25,6 +26,79 @@ const generateAccessAndRefreshToken = async(userId) => {
         return res.status(500).json(new ApiError(500,error,"Something went wrong while generating access and refresh token."))
     }
 };
+
+// Register and Send OTP API
+const registerAndSendOtp = asyncHandler(async (req, res) => {
+    const { email, username } = req.body;
+
+    console.log("Register BODY: ",req.body);
+
+    if (!email || !username) {
+        return res.status(400).json(new ApiError(400, {}, "Email and username are required."));
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+        user = new User({ email, username });
+        await user.save();
+    } else if (user.username !== username) {
+        return res.status(400).json(new ApiError(400, {}, "Username does not match with the existing email."));
+    }
+
+    const otp = generateOtp();
+    user.otp = otp;
+    user.otpExpiry = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
+    await user.save();
+
+    await sendOtpEmail(email, otp);
+
+    return res.status(200).json(new ApiResponse(200, { email }, "OTP sent successfully"));
+});
+
+// Verify OTP and Login API
+const verifyOtpAndLogin = asyncHandler(async (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        return res.status(400).json(new ApiError(400, {}, "Email and OTP are required."));
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return res.status(401).json(new ApiError(401, {}, "User not found."));
+    }
+
+    if (user.otp !== otp || user.otpExpiry < Date.now()) {
+        return res.status(401).json(new ApiError(401, {}, "Invalid or expired OTP."));
+    }
+
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+
+    const { refreshToken, accessToken } = await generateAccessAndRefreshToken(user._id);
+
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken -otp -otpExpiry");
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(200, {
+                user: loggedInUser,
+                accessToken,
+                refreshToken,
+            }, "User Logged In Successfully")
+        );
+});
 
 const registerUser = asyncHandler( async (req,res) => {
 
@@ -65,22 +139,6 @@ const registerUser = asyncHandler( async (req,res) => {
     const createdUser = await User.findById(user._id).select(
         "-refreshToken -password"
     );
-
-
-    // const createdUser = await User.aggregate([
-    //     {
-    //         $match:{
-    //             _id:user._id
-    //         }
-    //     },
-
-    //     {
-    //         $project:{
-    //             refreshToken: 0, 
-    //             password: 0 
-    //         }
-    //     }
-    // ]).then(createdUsers => createdUsers[0]);
 
     if(!createdUser){
         return res.status(403).json(new ApiError(403,{},"Something went wrong while registering the user."))
@@ -359,6 +417,8 @@ const updateUserProfileImage = asyncHandler(async(req,res,next)=>{
 });
 
 export { 
+    registerAndSendOtp,
+    verifyOtpAndLogin,
     registerUser, 
     loginUser,
     logoutUser,
