@@ -55,19 +55,44 @@ export const scheduleMail = asyncHandler(async(req, res) => {
 });
 
 export const cancelMail = asyncHandler(async(req, res) => {
+
+  const { jobId } = req.params;
+
   try {
-    const { jobId } = req.body;
+
+    console.log("Cancelling Body: " + jobId);
+
+    // retrieve job details from redis
+    const jobData = await redisClient.hGet('jobs', jobId);
+
+    if (!jobData) {
+      return res.status(404).json(new ApiError(404, {}, "Job not found"));
+    }
 
     const job = await mailQueue.getJob(jobId);
 
-    if (job) {
-      await job.remove();
-      await MailSchedule.findOneAndDelete({ jobId });
-      await redisClient.hDel('jobs', job.id);
-      return res.status(201).json(new ApiResponse(201,{jobId: job.id},'Mail scheduled successfully'));
-    } else {
-      return res.status(404).json(new ApiError(500, job, "Job not found" ));
-    } 
+    if(!job){
+      return res.status(404).json(new ApiError(404, {}, "Job not found"));
+    }
+
+     // Remove the job from Bull queue
+     await job.remove();
+
+     // Remove job details from Redis
+     await redisClient.hDel('jobs', jobId);
+
+     // Remove job details from MongoDB
+     await MailSchedule.findOneAndDelete({ jobId });
+
+    // if (job) {
+    //   await job.remove();
+    //   await MailSchedule.findOneAndDelete({ jobId });
+    //   await redisClient.hDel('jobs', job.id);
+    //   return res.status(201).json(new ApiResponse(201,{jobId: job.id},'Mail scheduled successfully'));
+    // } else {
+    //   return res.status(404).json(new ApiError(500, job, "Job not found" ));
+    // } 
+    return res.status(200).json(new ApiResponse(200, {}, 'Mail schedule canceled successfully'));
   } catch (error) {
     return res.status(500).json(new ApiError(500, error, error.message ));
   }
