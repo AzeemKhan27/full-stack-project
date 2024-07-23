@@ -6,7 +6,7 @@ import { upload } from '../middlewares/multer.middleware.js';
 const router = Router();
 
 router.route('/schedule-mail').post(upload.single('file'),verifyJWT,scheduleMail); 
-router.route('/cancel-mail').post(verifyJWT,cancelMail);
-router.route('/list-scheduled-mails').get(verifyJWT,listScheduledMails);
+router.route('/cancel-mail/:jobId').delete(cancelMail);//verifyJWT
+router.route('/list-scheduled-mails').get(listScheduledMails,verifyJWT);
 
 export default router;
