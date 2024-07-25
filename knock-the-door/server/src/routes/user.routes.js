@@ -14,8 +14,8 @@ router.route("/register").post(
 
 router.route("/login").post(loginUser);
 
-router.route("/direct-register-sendotp").post(registerAndSendOtp)
-router.route("/login-direct").post(verifyOtpAndLogin);
+router.route("/direct-register-sendotp").post(registerAndSendOtp,verifyJWT)
+router.route("/login-direct").post(verifyOtpAndLogin,verifyJWT);
 
 //secured routes    
 router.route("/logout").post(verifyJWT, logoutUser)  // "verifyJWT" this middleware verify token by Id.
