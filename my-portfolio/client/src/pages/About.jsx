@@ -21,7 +21,7 @@ const freelancers = [
     name: 'Devki Nandan Pandey',
     role: 'Mobile App Developer',
     experience: '4+ years',
-    skills: ['React Native', 'Swift', 'Kotlin'],
+    skills: ['Kotlin','React Native', 'Swift'],
     image: 'https://media.licdn.com/dms/image/v2/D5603AQHs_0Nr2iLZhA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719810106969?e=1733961600&v=beta&t=UOfeeFddAdNc5hLCYrJ7UhoBERSO5816KGkc2jh99Rs',
   },
 ];
