@@ -1,15 +1,16 @@
 // About.jsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Typewriter from "../components/Typewriter/TypeWriter";
 
 const freelancers = [
-  {
-    name: 'Jeeshan Khan',
-    role: 'Backend Nodejs Developer',
-    experience: '1+ years',
-    skills: ['ExpressJS', 'Node.js', 'NestJS', 'JavaScript'],
-    image: 'https://media.licdn.com/dms/image/v2/D5635AQHQCds-ZCeX7g/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1727176833225?e=1728849600&v=beta&t=YPfs6EZQ3TbwsOoBN_GPtYWWCpwuq829Jl-IScg-tLY',
-  },
+  // {
+  //   name: 'Jeeshan Khan',
+  //   role: 'Backend Nodejs Developer',
+  //   experience: '1+ years',
+  //   skills: ['ExpressJS', 'Node.js', 'NestJS', 'JavaScript'],
+  //   image: 'https://media.licdn.com/dms/image/v2/D5635AQHQCds-ZCeX7g/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1727176833225?e=1728849600&v=beta&t=YPfs6EZQ3TbwsOoBN_GPtYWWCpwuq829Jl-IScg-tLY',
+  // },
   {
     name: 'Azeem Khan',
     role: 'Fullstack Developer',
@@ -27,10 +28,26 @@ const freelancers = [
 ];
 
 
+
+
 const About = () => {
+  const words = ["We Are Here To Appreciate You To Touch More Heights"]
   return (
-    <div className="container mx-auto p-4 mt-20">
-      <h1 className="text-3xl text-center font-bold mb-4">We Are Here To Appreciate You To Touch More Heights</h1>
+    <div className="container mx-auto p-4 mt-5">
+      <hr />
+
+      {/* //section 1  */}
+      <h1 className="text-7xl m-4" >About Us</h1>
+      <div className="bg-orange-10 mx-auto m-4">
+          
+          <h6 >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam totam porro dolorum amet, quisquam ducimus adipisci. Debitis exercitationem perferendis dicta deserunt consectetur maiores sapiente asperiores, repellendus officiis et velit minus placeat suscipit quia itaque perspiciatis quibusdam dolor quam necessitatibus ullam dolores rerum illo mollitia natus. Quis cupiditate natus dolore repellendus, commodi nemo adipisci, explicabo itaque fugiat accusantium voluptatibus architecto molestiae, ipsa at possimus consequuntur iste tenetur. Eius aliquam, aspernatur temporibus unde repellat nihil porro obcaecati suscipit nesciunt totam dolores mollitia quis ducimus maiores dolorum explicabo tempore et perferendis aperiam reprehenderit est, pariatur dolor blanditiis quod. Alias cupiditate unde odio delectus!</h6>
+      </div>
+
+      <h1 className="text-3xl text-center font-bold m-10">
+            {/* {words[0]} */}
+        <Typewriter words={words} />
+      </h1>
+
       <div className="flex flex-wrap justify-center">
         {freelancers.map((freelancer, index) => (
           <div key={index} className="w-full md:w-1/3 xl:w-1/4 p-6 text-center bg-white rounded shadow-md">
@@ -46,6 +63,8 @@ const About = () => {
           </div>
         ))}
       </div>
+        <hr />
+      <h1>hhhhhhhh</h1>
     </div>
   )
  
