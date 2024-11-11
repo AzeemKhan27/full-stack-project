@@ -1,7 +1,7 @@
 // About.jsx
 
 import React, { useEffect, useState } from 'react';
-import Typewriter from "../components/Typewriter/TypeWriter";
+import Typewriter from "../components/ui/Typewriter/TypeWriter";
 
 const freelancers = [
   // {
