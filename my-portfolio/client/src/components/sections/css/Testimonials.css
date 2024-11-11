@@ -1,0 +1,35 @@
+/* src/components/Testimonials.css */
+
+.animate-scroll {
+  display: inline-block;
+  animation: scroll 30s linear infinite; /* Slower scrolling */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Adjusted to account for the duplicate testimonials */
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.testimonial-card {
+  max-width: 300px; /* Set a maximum width for the cards */
+  width: 100%; /* Allow the card to take full width up to the max-width */
+  margin: 0 10px; /* Adjust margin for spacing */
+  padding: 16px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.testimonial-card p {
+  overflow-wrap: break-word; /* Allow long words to break and wrap to the next line */
+  word-wrap: break-word; /* For older browsers */
+  hyphens: auto; /* Add hyphenation if needed */
+  margin: 0; /* Remove default margin */
+}
