@@ -12,7 +12,7 @@ const Slider = ({ images }) => {
     },
     
     {
-        title: "Quality In Affordable Price",
+        title: "Quality In Affordable price",
         description: "Affordable, high-quality products/services through operational efficiency and customer satisfaction focus."
     },
 
@@ -41,7 +41,7 @@ const Slider = ({ images }) => {
         <img
           src={images[currentSlide]}
           alt={`Slide ${currentSlide + 1}`}
-          className="w-full h-64 object-cover"
+          className="bg-amber-500 w-screen h-64 object-cover"
         />
         <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/75">
           <div className="w-3/4 text-center md:w-2/4">
