@@ -12,7 +12,7 @@ const Slider = ({ images }) => {
     },
     
     {
-        title: "Quality in low price",
+        title: "Quality In Affordable Price",
         description: "Affordable, high-quality products/services through operational efficiency and customer satisfaction focus."
     },
 
@@ -22,7 +22,7 @@ const Slider = ({ images }) => {
     },
 
     {
-        title: "Life time support",
+        title: "Life Time Support",
         description: "Comprehensive, ongoing assistance and maintenance provided to ensure customer satisfaction and product longevity, backed by a commitment to continuous improvement and innovation."
     },
   ];
@@ -30,7 +30,7 @@ const Slider = ({ images }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [images.length]);
