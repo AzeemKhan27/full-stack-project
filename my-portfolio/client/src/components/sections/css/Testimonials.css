@@ -2,7 +2,7 @@
 
 .animate-scroll {
   display: inline-block;
-  animation: scroll 30s linear infinite; /* Slower scrolling */
+  animation: scroll 30s linear infinite; 
 }
 
 @keyframes scroll {
@@ -10,9 +10,11 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Adjusted to account for the duplicate testimonials */
+    transform: translateX(-50%); 
   }
 }
+
+
 
 .overflow-hidden {
   overflow: hidden;
@@ -20,16 +22,16 @@
 }
 
 .testimonial-card {
-  max-width: 300px; /* Set a maximum width for the cards */
-  width: 100%; /* Allow the card to take full width up to the max-width */
-  margin: 0 10px; /* Adjust margin for spacing */
-  padding: 16px; /* Add padding for better spacing */
-  box-sizing: border-box; /* Include padding in width calculation */
+  max-width: 300px; 
+  width: 100%; 
+  margin: 0 10px; 
+  padding: 16px; 
+  box-sizing: border-box; 
 }
 
 .testimonial-card p {
-  overflow-wrap: break-word; /* Allow long words to break and wrap to the next line */
-  word-wrap: break-word; /* For older browsers */
-  hyphens: auto; /* Add hyphenation if needed */
+  overflow-wrap: break-word; 
+  word-wrap: break-word; 
+  hyphens: auto; 
   margin: 0; /* Remove default margin */
 }
