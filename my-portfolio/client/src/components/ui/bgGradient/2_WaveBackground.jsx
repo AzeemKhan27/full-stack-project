@@ -28,7 +28,7 @@ const WaveBackground = ({ message }) => {
       }
     };
 
-    const timer = setTimeout(type, isDeleting ? 1000000 : 20); // Adjust typing and deleting speed
+    const timer = setTimeout(type, isDeleting ? 100 : 20); // Adjust typing and deleting speed
     return () => clearTimeout(timer);
   }, [isDeleting, charIndex, message]); // Removed displayedMessage from dependencies
 
@@ -53,6 +53,7 @@ const WaveBackground = ({ message }) => {
           <span className="text-6xl font-bold">{displayedMessage.charAt(0)}</span>
           <span className="text-5xl font-bold">{displayedMessage.charAt(1)}</span>
           <span className="text-2xl p-2">{displayedMessage.slice(2)}</span>
+          
         </h1>
 
       </div>
@@ -60,10 +61,6 @@ const WaveBackground = ({ message }) => {
         @keyframes wave {
           0% {
             transform: translateX(10);
-          }
-
-          50% {
-            transform: translateX(10%);
           }
 
           100% {
