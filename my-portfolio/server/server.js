@@ -3,13 +3,25 @@
 import express from 'express';
 import connectDB from './config/db.js';
 import contactRoutes from './routes/contactRoutes.js';
+import cors from 'cors';
+const app = express();
+
+
 
 // Load environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Use CORS middleware
+
+app.use(cors({
+
+    origin: 'http://localhost:5173' // Allow requests from this origin
+
+}));
+
 // Initialize Express app
-const app = express();
+// const app = express();
 
 // Connect to MongoDB
 connectDB();

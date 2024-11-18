@@ -1,16 +1,16 @@
-/* WavyBackground.css */
-@keyframes wave-animation {
+@keyframes wave {
     0% {
-        transform: translateX(0);
+      transform: translateX(10px);
     }
     100% {
-        transform: translateX(-50%);
+      transform: translateX(-10%);
     }
-}
-
-.wave {
-    animation: wave-animation 10s linear infinite;
-    width: 200%; /* Make the wave wider to allow for smooth animation */
-    position: relative; /* Ensure it stays in the correct position */
-    bottom: 0; /* Align it to the bottom */
-}
+  }
+  
+  .wave {
+    animation: wave 10s linear infinite;
+  }
+  
+  .container {
+    background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+  }

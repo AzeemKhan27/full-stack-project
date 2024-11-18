@@ -2,14 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import Typewriter from "../components/ui/Typewriter/TypeWriter";
+import OurStory from "../components/sections/AboutPage/OurStory.jsx"
+import OurValues from "../components/sections/AboutPage/OurValues.jsx"
+import CallToAction from "../components/sections/AboutPage/CallToAction.jsx"
+import Achievements from "../components/sections/AboutPage/Achievements.jsx"
+import MeetTheTeam from "../components/sections/AboutPage/MeetTheTeam.jsx"
+import ContactInformation from "../components/sections/AboutPage/ContactInformation.jsx"
+
 
 const freelancers = [
   // {
-  //   name: 'Jeeshan Khan',
-  //   role: 'Backend Nodejs Developer',
-  //   experience: '1+ years',
-  //   skills: ['ExpressJS', 'Node.js', 'NestJS', 'JavaScript'],
-  //   image: 'https://media.licdn.com/dms/image/v2/D5635AQHQCds-ZCeX7g/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1727176833225?e=1728849600&v=beta&t=YPfs6EZQ3TbwsOoBN_GPtYWWCpwuq829Jl-IScg-tLY',
+  //   name: 'Shreenath',
+  //   role: 'Software Engineer',
+  //   experience: '2+ years',
+  //   skills: ['Python', 'Django', 'Devops', 'Cloud Computing'],
+  //   image: '', //D:\Personal-Details\Career-Details\practice\Learning\fullstack\my-portfolio\client\public\profiles
   // },
   {
     name: 'Azeem Khan',
@@ -27,7 +34,9 @@ const freelancers = [
   },
 ];
 
-
+const Introduction = `Welcome to "Pick Assets", your go-to platform for freelance services and training! We are a dedicated team of experienced freelancers passionate about empowering individuals and businesses to achieve their goals through expert guidance and high-quality services.
+At "Pick Assets", we understand the dynamic nature of the freelance world and the importance of having the right skills and support. Whether you're looking to hire top-notch freelancers for your projects or seeking to enhance your own skills through our comprehensive training programs, we are here to help you succeed.
+Join us on this journey as we connect talent with opportunity and foster a community of growth and collaboration!`;
 
 
 const About = () => {
@@ -40,7 +49,7 @@ const About = () => {
       <h1 className="text-7xl m-4" >About Us</h1>
       <div className="bg-orange-10 mx-auto m-4">
           
-          <h6 >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam totam porro dolorum amet, quisquam ducimus adipisci. Debitis exercitationem perferendis dicta deserunt consectetur maiores sapiente asperiores, repellendus officiis et velit minus placeat suscipit quia itaque perspiciatis quibusdam dolor quam necessitatibus ullam dolores rerum illo mollitia natus. Quis cupiditate natus dolore repellendus, commodi nemo adipisci, explicabo itaque fugiat accusantium voluptatibus architecto molestiae, ipsa at possimus consequuntur iste tenetur. Eius aliquam, aspernatur temporibus unde repellat nihil porro obcaecati suscipit nesciunt totam dolores mollitia quis ducimus maiores dolorum explicabo tempore et perferendis aperiam reprehenderit est, pariatur dolor blanditiis quod. Alias cupiditate unde odio delectus!</h6>
+          <h6> {Introduction} </h6>
       </div>
 
       <h1 className="text-3xl text-center font-bold m-10">
@@ -64,7 +73,31 @@ const About = () => {
         ))}
       </div>
         <hr />
-      <h1>hhhhhhhh</h1>
+
+      {/* Our Story */}
+
+      <OurStory />
+
+      {/* OurValues */}
+
+      <OurValues />
+
+      {/* MeetTheTeam */}
+
+      <MeetTheTeam />
+
+      {/* Achievements */}
+
+      <Achievements/>
+
+      {/* CallToAction */}
+
+      <CallToAction />
+
+      {/* ContactInformation   */}
+
+      <ContactInformation />
+
     </div>
   )
  
