@@ -18,7 +18,7 @@ const teamMembers = [
   },
   {
     name: 'Apexa',
-    role: 'SEO Expert',
+    role: 'SEO Expert and Digital Market Expert',
     image: 'https://via.placeholder.com/150',
   },
   {

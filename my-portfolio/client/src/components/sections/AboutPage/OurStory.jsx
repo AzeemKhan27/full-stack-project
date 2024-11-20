@@ -6,7 +6,7 @@ const OurStory = () => {
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-bold mb-6">Our Story</h2>
         <p className="text-gray-600 mb-12">
-          At "Pick Assets", we began our journey with a vision to empower freelancers and businesses alike. 
+          At "Tech Assets Hub", we began our journey with a vision to empower freelancers and businesses alike. 
           Our dedicated team of experienced professionals is passionate about providing high-quality services 
           and training that help individuals achieve their goals. We believe in the power of collaboration 
           and strive to create a community where talent meets opportunity. Join us as we continue to grow 

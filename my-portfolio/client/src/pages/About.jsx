@@ -34,8 +34,8 @@ const freelancers = [
   },
 ];
 
-const Introduction = `Welcome to "Pick Assets", your go-to platform for freelance services and training! We are a dedicated team of experienced freelancers passionate about empowering individuals and businesses to achieve their goals through expert guidance and high-quality services.
-At "Pick Assets", we understand the dynamic nature of the freelance world and the importance of having the right skills and support. Whether you're looking to hire top-notch freelancers for your projects or seeking to enhance your own skills through our comprehensive training programs, we are here to help you succeed.
+const Introduction = `Welcome to "Tech Assets Hub", your go-to platform for freelance services and training! We are a dedicated team of experienced freelancers passionate about empowering individuals and businesses to achieve their goals through expert guidance and high-quality services.
+At "Tech Assets Hub", we understand the dynamic nature of the freelance world and the importance of having the right skills and support. Whether you're looking to hire top-notch freelancers for your projects or seeking to enhance your own skills through our comprehensive training programs, we are here to help you succeed.
 Join us on this journey as we connect talent with opportunity and foster a community of growth and collaboration!`;
 
 
