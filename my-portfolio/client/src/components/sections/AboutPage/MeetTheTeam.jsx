@@ -8,22 +8,7 @@ const teamMembers = [
   },
   {
     name: 'Ashwini S',
-    role: 'Python Devoper',
-    image: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Charitha',
-    role: 'Digital Marketing Expert',
-    image: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Apexa',
-    role: 'SEO Expert and Digital Market Expert',
-    image: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Ritesh',
-    role: 'Fullstack Developer',
+    role: 'Python Developer',
     image: 'https://via.placeholder.com/150',
   },
   {
@@ -32,8 +17,28 @@ const teamMembers = [
     image: 'https://via.placeholder.com/150',
   },
   {
+    name: 'Muskan',
+    role: 'Social Media Expert',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    name: 'Apexa',
+    role: 'SEO Expert and Digital Marketing Expert',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    name: 'Ritesh',
+    role: 'Fullstack Developer',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
     name: 'Hussain',
     role: 'Frontend Expert',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    name: 'Charitha',
+    role: 'Digital Marketing Expert',
     image: 'https://via.placeholder.com/150',
   },
   {

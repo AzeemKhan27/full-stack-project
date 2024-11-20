@@ -1,25 +1,71 @@
-import React from 'react';
-import ContactForm from '../components/forms/ContactForm';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Contact() {
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [status, setStatus] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      if (response.status === 201) {
+        setStatus('Message sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      setStatus('Error: ' + error.message);
+    }
+  };
+
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Get in Touch</h2>
-          <p className="text-lg mb-4">We'd love to hear from you! Feel free to contact us using the form below.</p>
-          <p className="text-gray-600">123 Main Street<br />New York, NY 10001<br />United States</p>
-          <p className="text-gray-600 mt-2">Email: info@example.com<br />Phone: +1 123-456-7890</p>
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Send Us a Message</h2>
-          <ContactForm />
-        </div>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Your Name"
+        required
+        className="block mb-4 p-2 border rounded"
+      />
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Your Email"
+        required
+        className="block mb-4 p-2 border rounded"
+      />
+      <textarea
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        placeholder="Your Message"
+        required
+        className="block mb-4 p-2 border rounded"
+      ></textarea>
+      <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">
+        Send Message
+      </button>
+      {status && <p className="mt-4 text-sm">{status}</p>}
+    </form>
   );
-}
+};
 
-export default Contact;
-
+export default ContactForm;
