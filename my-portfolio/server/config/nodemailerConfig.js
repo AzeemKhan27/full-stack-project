@@ -1,10 +1,9 @@
-// config/nodemailerConfig.js
 const nodemailerConfig = {
-  service: 'Gmail', // Use your email service
+  service: 'Gmail',
   auth: {
-    user: 'erazeem.career27@gmail.com', // Your email
-    pass: 'your-email-password', // Your email password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 };
 
-export default nodemailerConfig; // Ensure you have a default export
+export default nodemailerConfig;
