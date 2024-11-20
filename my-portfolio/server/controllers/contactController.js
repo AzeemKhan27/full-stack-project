@@ -1,11 +1,10 @@
-// controllers/contactController.js
 import Contact from '../models/Contact.js';
 import { sendEmail } from '../services/emailService.js';
 import contactService from '../services/contactService.js';
 
 // Controller methods
 const contactController = {
-  async createContact(rebq, res) {
+  async createContact(req, res) {
     try {
       const { name, email, message } = req.body;
       const newContact = await contactService.createContact({ name, email, message });
