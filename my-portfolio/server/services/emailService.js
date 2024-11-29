@@ -3,6 +3,10 @@ import nodemailerConfig from '../config/nodemailerConfig.js';
 
 export const sendEmail = async (contact) => {
   try {
+    if (!contact.email) {
+      throw new Error('Recipient email is not defined.');
+    }
+    
     const transporter = nodemailer.createTransport({
       service: nodemailerConfig.service,
       auth: {
