@@ -3,6 +3,7 @@
 import express from 'express';
 import connectDB from './config/db.js';
 import contactRoutes from './routes/contactRoutes.js';
+import servicesRoutes from './routes/servicesRoutes.js';
 import cors from 'cors';
 const app = express();
 
@@ -28,7 +29,9 @@ connectDB();
 // Middleware
 app.use(express.json());
 
-// Routes
+// Services
+app.use('/api/services', servicesRoutes);
+// Contacts
 app.use('/api/contact', contactRoutes);
 
 // Error handling middleware
