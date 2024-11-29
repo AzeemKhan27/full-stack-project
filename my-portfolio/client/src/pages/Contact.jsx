@@ -5,6 +5,7 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phoneNumber: '',
     message: '',
   });
 
@@ -23,7 +24,7 @@ const ContactForm = () => {
       const response = await axios.post('http://localhost:5000/api/contact', formData);
       if (response.status === 201) {
         setStatus('Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', phoneNumber: '', message: '' });
       } else {
         setStatus('Failed to send message. Please try again.');
       }
@@ -52,6 +53,16 @@ const ContactForm = () => {
         required
         className="block mb-4 p-2 border rounded"
       />
+      <input
+        type="number"
+        name="phoneNumber"
+        value={formData.phoneNumber}
+        onChange={handleChange}
+        placeholder="Your Phone Number"
+        required
+        className="block mb-4 p-2 border rounded"
+      />
+      
       <textarea
         name="message"
         value={formData.message}
