@@ -5,7 +5,7 @@ const serviceController = {
     try {
       const { modules } = req.body;
 
-      // Validate that modules is an object
+      // Validate that modules is provided and correctly formatted
       if (!modules || typeof modules !== 'object') {
         return res.status(400).json({ message: 'Invalid payload: modules must be an object.' });
       }

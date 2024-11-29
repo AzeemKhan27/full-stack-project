@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import store from './redux/store';
+import ServiceMainPage from './pages/services/ServiceMainPage'; // Import ServiceMainPage
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} /> {/* Use element prop instead of component */}
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<ServiceMainPage />} /> {/* Add Route */}
         </Routes>
         <Footer />
       </Router>
