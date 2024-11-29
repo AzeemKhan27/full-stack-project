@@ -4,8 +4,8 @@ import Contact from '../models/Contact.js';
 
 // Service methods
 const contactService = {
-  async createContact({ name, email, message }) {
-    const newContact = new Contact({ name, email, message });
+  async createContact({ name, phoneNumber, email, message }) {
+    const newContact = new Contact({ name, phoneNumber, email, message });
     return newContact.save();
   },
 };
