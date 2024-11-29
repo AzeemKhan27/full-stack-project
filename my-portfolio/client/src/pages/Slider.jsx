@@ -6,7 +6,7 @@ const Slider = ({ images }) => {
 
   // Define an array of text content corresponding to each image
   const slideText = [
-    {
+    { 
       title: "Best Service",
       description: "Efficient, reliable, personalized, friendly, professional, accessible, proactive, transparent, empathetic, trustworthy, affordable, and excellent service."
     },
@@ -37,7 +37,7 @@ const Slider = ({ images }) => {
 
   return (
     <Carousel className="rounded-xl">
-      <div className="relative h-full w-full">
+      <div className="relative h-full w-full m-14">
         <img
           src={images[currentSlide]}
           alt={`Slide ${currentSlide + 1}`}
