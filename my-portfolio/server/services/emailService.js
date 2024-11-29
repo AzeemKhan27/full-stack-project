@@ -6,7 +6,7 @@ export const sendEmail = async (contact) => {
     if (!contact.email) {
       throw new Error('Recipient email is not defined.');
     }
-    
+
     const transporter = nodemailer.createTransport({
       service: nodemailerConfig.service,
       auth: {
@@ -25,7 +25,7 @@ export const sendEmail = async (contact) => {
     await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', error.message);
     return false;
   }
 };

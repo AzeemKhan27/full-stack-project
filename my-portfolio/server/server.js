@@ -7,7 +7,6 @@ import cors from 'cors';
 const app = express();
 
 
-
 // Load environment variables
 import dotenv from 'dotenv';
 dotenv.config();
@@ -31,6 +30,12 @@ app.use(express.json());
 
 // Routes
 app.use('/api/contact', contactRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err.message);
+    res.status(500).json({ message: 'An unexpected error occurred.' });
+});  
 
 // Start server
 const PORT = process.env.PORT || 5000;
