@@ -28,7 +28,7 @@ export const sendEmail = async (contact) => {
       from: nodemailerConfig.auth.user,
       to: nodemailerConfig.adminEmail, // Admin/portal email
       subject: `New Contact Submission from ${contact.name}`,
-      text: `A new user has reached out to you via the contact form.\n\nDetails:\nName: ${contact.name}\nEmail: ${contact.email}\nMessage: ${contact.message}\n\nPlease respond promptly.`,
+      text: `Hi Admin, A new user has reached out to you via the contact form.\n\nDetails:\nName: ${contact.name}\nEmail: ${contact.email}\nMessage: ${contact.message}\n\nPlease respond promptly.`,
     };
 
     // Send both emails
