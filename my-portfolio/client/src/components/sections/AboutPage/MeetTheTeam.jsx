@@ -2,7 +2,7 @@ import React from 'react';
 
 const teamMembers = [
   {
-    name: 'Shreenath',
+    name: 'Shrinath Mateti',
     role: 'Software Engineer',
     image: 'https://via.placeholder.com/150',
   },
@@ -40,12 +40,7 @@ const teamMembers = [
     name: 'Charitha',
     role: 'Digital Marketing Expert',
     image: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Zainab',
-    role: 'English Spoken Helper',
-    image: 'https://via.placeholder.com/150',
-  },
+  }
 ];
 
 const MeetTheTeam = () => {

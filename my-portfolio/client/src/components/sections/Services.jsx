@@ -68,6 +68,11 @@ const services = [
     description: 'Facilitating connections with industry professionals and peers.',
     icon: '🌐',
   },
+  {
+    title: 'Devops',
+    description: '',
+    icon: '🌐',
+  },
 ];
 
 const Services = () => {

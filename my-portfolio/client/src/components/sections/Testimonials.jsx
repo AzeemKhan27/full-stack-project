@@ -24,7 +24,7 @@ const testimonials = [
     avatar: profile, // You can replace this with an actual image URL
   },
   {
-    name: 'Shreenath Mateti',
+    name: 'Shrinath Mateti',
     feedback: 'It was an amazing experience with your tech Team and they all experience personalities hand holding me to build my final semester project',
     designation: 'B-Tech Student, Amity University',
     avatar: profile, // You can replace this with an actual image URL
