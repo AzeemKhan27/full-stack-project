@@ -10,6 +10,12 @@ export default {
   theme: {
     extend: {},
   },
+  variants: {
+    extend: {
+      textColor: ['hover'],
+      backgroundColor: ['hover'],
+    },
+  },
   plugins: [],
 }
 
