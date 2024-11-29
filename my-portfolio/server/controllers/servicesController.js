@@ -1,15 +1,27 @@
-import servicesService from '../services/servicesService.js';
+import Service from '../models/serviceModel.js';
 
-const servicesController = {
+const serviceController = {
   async createService(req, res) {
     try {
-      const service = await servicesService.createService(req.body);
-      res.status(201).json(service);
+      const { modules } = req.body;
+
+      // Validate that modules is an object
+      if (!modules || typeof modules !== 'object') {
+        return res.status(400).json({ message: 'Invalid payload: modules must be an object.' });
+      }
+
+      // Create a new service document
+      const newService = new Service({ modules });
+
+      // Save to the database
+      const savedService = await newService.save();
+
+      res.status(201).json({ message: 'Service created successfully', service: savedService });
     } catch (error) {
       console.error('Error creating service:', error);
-      res.status(500).json({ message: 'Failed to create service' });
+      res.status(500).json({ message: 'Failed to create service', error: error.message });
     }
   },
 };
 
-export default servicesController;
+export default serviceController;

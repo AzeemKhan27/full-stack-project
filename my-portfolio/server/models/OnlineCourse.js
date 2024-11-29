@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import CourseCategory from './CourseCategory.js';
 
 const OnlineCourseSchema = new mongoose.Schema({
   orientation: { type: Boolean, default: false },

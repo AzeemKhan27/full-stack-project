@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import OnlineCourse from './OnlineCourse.js';
 
 const StudentModuleSchema = new mongoose.Schema({
   projectHelpGuidance: { type: Boolean, default: false },
