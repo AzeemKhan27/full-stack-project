@@ -27,10 +27,10 @@ const Home = () => {
     <div className="container mx-auto flex flex-col items-center justify-center">
       <Slider images={images} />
      
-      <div className="outline outline-offset-4 outline-indigo-500 text-4xl font-bold m-8 
+      <div className="bg-black outline outline-offset-4 outline-indigo-500 text-4xl font-bold m-8 
                       rounded-[6px] p-8"> 
  
-        <h2 className="pl-96 pr-96 capitalize text-4.5xl my-4 animate-bounce 
+        <h2 className="text-white pl-96 pr-96 capitalize text-4.5xl my-4 animate-bounce 
                        bg-clip-text text-transparent bg-gradient-to-b from-pink-200 
                        to-blue-600">
                     {greet}
