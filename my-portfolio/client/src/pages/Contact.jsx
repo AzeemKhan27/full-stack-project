@@ -34,7 +34,8 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="">
+      <form onSubmit={handleSubmit}>
       <input
         type="text"
         name="name"
@@ -76,6 +77,7 @@ const ContactForm = () => {
       </button>
       {status && <p className="mt-4 text-sm">{status}</p>}
     </form>
+    </div>
   );
 };
 
