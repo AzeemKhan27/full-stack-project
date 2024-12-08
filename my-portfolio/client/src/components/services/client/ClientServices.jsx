@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const ClientServices = () => {
   const [showForm, setShowForm] = useState(false);
@@ -27,19 +28,54 @@ const ClientServices = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Here you would typically send the form data to your backend
+  //   console.log('Form submitted:', formData);
+  //   // Reset form after submission
+  //   setFormData({
+  //     clientName: '',
+  //     phoneNumber: '',
+  //     email: '',
+  //     message: '',
+  //   });
+  //   setShowForm(false);
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({
-      clientName: '',
-      phoneNumber: '',
-      email: '',
-      message: '',
-    });
-    setShowForm(false);
+  
+    const templateParams = {
+      client_name: formData.clientName,
+      phone_number: formData.phoneNumber,
+      email: formData.email,
+      message: formData.message,
+    };
+  
+    emailjs
+      .send(
+        process.env.EmailJS_PRI_KEY,   // Your Service ID
+        'YOUR_TEMPLATE_ID',       // Replace with your Template ID
+        templateParams,
+        process.env.EmailJS_PUB_KEY     // Replace with your Public Key
+      )
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        alert('Message sent successfully!');
+        setFormData({
+          clientName: '',
+          phoneNumber: '',
+          email: '',
+          message: '',
+        });
+        setShowForm(false);
+      })
+      .catch((error) => {
+        console.error('Email sending error:', error);
+        alert('Failed to send message. Please try again later.');
+      });
   };
+  
 
   return (
     <div className="container mx-auto">
