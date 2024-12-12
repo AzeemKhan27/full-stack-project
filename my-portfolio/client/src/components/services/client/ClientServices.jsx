@@ -18,6 +18,11 @@ const ClientServices = () => {
     'Collaborate with us for Futuristic Businesses',
   ];
 
+  // console.log("process..... ",process.env.EmailJS_PRI_KEY,     // Your Service ID
+  //   process.env.EmailJS_TEMPLATE_ID,              // Replace with your Template ID
+  //   templateParams,
+  //   process.env.EmailJS_PUB_KEY)
+
   const handleServiceClick = (service) => {
     setSelectedService(service);
     setShowForm(true);
@@ -27,20 +32,6 @@ const ClientServices = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Here you would typically send the form data to your backend
-  //   console.log('Form submitted:', formData);
-  //   // Reset form after submission
-  //   setFormData({
-  //     clientName: '',
-  //     phoneNumber: '',
-  //     email: '',
-  //     message: '',
-  //   });
-  //   setShowForm(false);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,10 +45,10 @@ const ClientServices = () => {
   
     emailjs
       .send(
-        process.env.EmailJS_PRI_KEY,   // Your Service ID
-        'YOUR_TEMPLATE_ID',       // Replace with your Template ID
+        "service_g55wi3b",     // Your Service ID
+        "template_7ocqybe",              // Replace with your Template ID
         templateParams,
-        process.env.EmailJS_PUB_KEY     // Replace with your Public Key
+        "Fw9Lzgqq5HYGfY_Fb" //fg001oLdrG9QlS6LjgSIx    // Replace with your Public Key
       )
       .then((response) => {
         console.log('Email sent successfully!', response.status, response.text);
