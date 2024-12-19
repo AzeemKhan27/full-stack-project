@@ -17,7 +17,7 @@ const teamMembers = [
     image: 'https://via.placeholder.com/150',
   },
   {
-    name: 'Muskan',
+    name: 'Muskan Khan',
     role: 'Social Media Expert',
     image: 'https://via.placeholder.com/150',
   },

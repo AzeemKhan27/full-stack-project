@@ -11,6 +11,7 @@ const ContactInformation = () => {
         <p className="text-gray-600">Address-2: Jaipur,Rajasthan, India</p>
         <p className="text-gray-600">Address-3: Noida,Sector 16, Uttar Pradesh, India</p>
         <p className="text-gray-600">Address-4: Mathura, Uttar Pradesh, India</p>
+        <p className="text-gray-600">Address-5: B 59/1 khanpur, New Delhi 110062.</p>
       </div>
     </section>
   );
