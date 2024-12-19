@@ -1,3 +1,4 @@
+// server/routes/servicesRoutes.js
 import express from 'express';
 import servicesController from '../controllers/servicesController.js';
 

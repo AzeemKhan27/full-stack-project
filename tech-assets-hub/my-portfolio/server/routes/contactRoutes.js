@@ -1,4 +1,4 @@
-// routes/contactRoutes.js
+// server/routes/contactRoutes.js
 import express from 'express';
 import contactController from '../controllers/contactController.js';
 
