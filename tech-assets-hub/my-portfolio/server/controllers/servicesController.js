@@ -1,3 +1,5 @@
+
+// server/controllers/servicesController.js
 import Service from '../models/serviceModel.js';
 
 const serviceController = {

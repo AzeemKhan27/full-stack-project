@@ -1,4 +1,4 @@
-
+// server/controllers/contactController.js
 import { sendEmail } from '../services/emailService.js';
 import contactService from '../services/contactService.js';
 import validator from 'validator';

@@ -5,6 +5,10 @@ import connectDB from './config/db.js';
 import contactRoutes from './routes/contactRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js';
 import cors from 'cors';
+
+//Service/Student :
+import notifyRoutes from './routes/notifyRoutes.js';
+
 const app = express();
 
 
@@ -33,6 +37,9 @@ app.use(express.json());
 app.use('/api/services', servicesRoutes);
 // Contacts
 app.use('/api/contact', contactRoutes);
+
+// Services/Client
+app.use('/api/services/client', notifyRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

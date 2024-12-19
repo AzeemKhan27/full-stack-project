@@ -1,3 +1,5 @@
+
+// server/config/nodemailerConfig.js
 const nodemailerConfig = {
   service: 'Gmail',
   auth: {

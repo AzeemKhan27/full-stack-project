@@ -1,3 +1,4 @@
+// server/services/emailService.js
 import nodemailer from 'nodemailer';
 import nodemailerConfig from '../config/nodemailerConfig.js';
 

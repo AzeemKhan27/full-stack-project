@@ -1,3 +1,5 @@
+// server/models/serviceModel.js
+
 import mongoose from 'mongoose';
 
 // Define sub-schemas
