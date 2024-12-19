@@ -193,5 +193,4 @@ const ClientModule = () => {
     </div>
   );
 };
-
 export default ClientModule;
