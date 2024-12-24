@@ -39,7 +39,7 @@ app.use('/api/services', servicesRoutes);
 app.use('/api/contact', contactRoutes);
 
 // Services/Client
-app.use('/api/services/client', notifyRoutes);
+app.use('/api/services/notifications', notifyRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

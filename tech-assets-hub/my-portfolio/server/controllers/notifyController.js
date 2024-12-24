@@ -1,22 +1,28 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
+
+// Reusable transporter
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 export const sendClientNotification = async (req, res) => {
   const { clientName, phoneNumber, email, message, serviceType } = req.body;
 
-  try {
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+  if (!clientName || !email || !phoneNumber || !serviceType) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
 
-    // Email to client
+  try {
+    // Client email
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: email, // Client's email
+      to: email,
       subject: `Notification for ${serviceType}`,
       html: `
         <h2>Dear ${clientName},</h2>
@@ -26,10 +32,10 @@ export const sendClientNotification = async (req, res) => {
       `,
     };
 
-    // Email to admin
-    const informToAdmin = {
-      from: process.env.EMAIL_USER, // Sender's email (admin email address)
-      to: process.env.ADMIN_EMAIL, // Admin's email
+    // Admin email
+    const adminMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL,
       subject: `New Service Request: ${serviceType}`,
       html: `
         <h2>Hi Consultant Team,</h2>
@@ -42,16 +48,41 @@ export const sendClientNotification = async (req, res) => {
       `,
     };
 
-    // Send emails to client and admin
-    const clientEmailResponse = await transporter.sendMail(mailOptions);
-    const adminEmailResponse = await transporter.sendMail(informToAdmin);
+    await transporter.sendMail(mailOptions);
+    await transporter.sendMail(adminMailOptions);
 
-    // Respond with success if both emails are sent
-    res.status(200).json({
-      message: 'Notifications sent successfully!',
-      clientEmailResponse,
-      adminEmailResponse,
+    res.status(200).json({ message: 'Notifications sent successfully!' });
+  } catch (error) {
+    console.error('Email sending error:', error);
+    res.status(500).json({ message: 'Failed to send emails.', error });
+  }
+};
+
+export const sendStudentNotifications = async (req, res) => {
+  const { name, age, phone, email, message, serviceType } = req.body;
+
+  if (!name || !age || !phone || !email || !serviceType) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    // Admin notification
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL,
+      subject: `New Service Request: ${serviceType}`,
+      text: `Name: ${name}, Age: ${age}, Phone: ${phone}, Email: ${email}, Message: ${message}`,
     });
+
+    // Student notification
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Thank You for Your Request',
+      text: `Hi ${name},\n\nWe are glad to see you on our portal. We will get in touch, schedule a meeting, and discuss your request soon.\n\nBest regards,\nStudent Services`,
+    });
+
+    res.status(200).json({ message: 'Notifications sent successfully!' });
   } catch (error) {
     console.error('Email sending error:', error);
     res.status(500).json({ message: 'Failed to send emails.', error });
