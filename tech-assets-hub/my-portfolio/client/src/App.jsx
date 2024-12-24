@@ -31,6 +31,8 @@
 // export default App;
 
 
+//client/src/App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -39,10 +41,12 @@ import Footer from './components/sections/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import ServiceMainPage from './pages/services/ServiceMainPage';
-import StudentService from './pages/services/student/StudentService';
-import ClientService from './pages/services/client/ClientService';
+import StudentService from './pages/services/student/StudentService.jsx';
+import ClientService from './pages/services/client/ClientService.jsx';
 import store from './redux/store';
+
+// import StudentService from './pages/services/student/StudentService.jsx';
+import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
 
 function App() {
   return (
@@ -58,7 +62,10 @@ function App() {
             {/* Nested routes */}
             <Route path="student" element={<StudentService />} />
             <Route path="client" element={<ClientService />} />
+
           </Route>
+          <Route path="/services/student" element={<StudentService />} />
+          <Route path="/services/student/:serviceType" element={<ServiceDetail />} />
         </Routes>
         <Footer />
       </Router>
