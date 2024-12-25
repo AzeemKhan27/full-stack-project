@@ -1,19 +1,17 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const courseSchema = new mongoose.Schema({
+const CourseSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: { type: String, required: true },
-  syllabus: { type: [String], required: true },
-  instructor: {
-    name: { type: String, required: true },
-    bio: { type: String, required: true },
-    photo: { type: String }, // URL to Cloudinary image
-  },
-  duration: { type: String, required: true },
-  timing: { type: String, required: true },
-  price: { type: Number, required: true }, // New Field: Course Price
-  faq: { type: [Object], default: [] }, // { question: String, answer: String }
-  image: { type: String }, // URL to Cloudinary image
+  instructor: { type: String, required: true },
+  description: { type: String },
+  syllabus: { type: Array },
+  price: { type: Number, required: true },
+  duration: { type: String },
+  timing: { type: String },
+  faq: { type: Array },
+  image: { type: String },
+  createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Course', courseSchema);
+const Course = mongoose.model('Course', CourseSchema);
+export default Course;

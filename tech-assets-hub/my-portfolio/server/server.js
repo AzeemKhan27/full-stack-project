@@ -4,7 +4,7 @@ import express from 'express';
 import connectDB from './config/db.js';
 import contactRoutes from './routes/contactRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js';
-import courseRoutes from './routes/courseRoutes';
+import courseRoutes from './routes/courseRoutes.js';
 import cors from 'cors';
 
 //Service/Student :

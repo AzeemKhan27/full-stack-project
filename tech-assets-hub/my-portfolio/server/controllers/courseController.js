@@ -1,28 +1,34 @@
-const Course = require('../models/Course');
-const cloudinary = require('../config/cloudinary');
 
-exports.createCourse = async (req, res) => {
+import cloudinary from '../config/cloudinary.js';
+console.log(cloudinary);
+import fs from 'fs';
+
+import Course from '../models/Course.js';
+console.log(Course); 
+
+export const createCourse = async (req, res) => {
   try {
     const { title, description, syllabus, instructor, duration, timing, price, faq } = req.body;
 
     // Handle Image Upload
-    let imageUrl = null;
+    let imageUrl = '';
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: 'courses',
       });
       imageUrl = result.secure_url;
+      fs.unlinkSync(req.file.path);
     }
 
     const course = await Course.create({
       title,
       description,
-      syllabus,
+      syllabus : JSON.parse(syllabus),
       instructor,
       duration,
       timing,
       price,
-      faq,
+      faq : JSON.parse(faq),
       image: imageUrl,
     });
 
@@ -32,7 +38,7 @@ exports.createCourse = async (req, res) => {
   }
 };
 
-exports.getCourses = async (req, res) => {
+export const getCourses = async (req, res) => {
   try {
     const courses = await Course.find();
     res.status(200).json({ success: true, data: courses });
@@ -41,7 +47,7 @@ exports.getCourses = async (req, res) => {
   }
 };
 
-exports.getCourseById = async (req, res) => {
+export const getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     if (!course) {
@@ -53,7 +59,7 @@ exports.getCourseById = async (req, res) => {
   }
 };
 
-exports.updateCourse = async (req, res) => {
+export const updateCourse = async (req, res) => {
   try {
     const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(200).json({ success: true, data: updatedCourse });
@@ -62,7 +68,7 @@ exports.updateCourse = async (req, res) => {
   }
 };
 
-exports.deleteCourse = async (req, res) => {
+export const deleteCourse = async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: 'Course deleted successfully' });
