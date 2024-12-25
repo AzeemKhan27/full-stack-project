@@ -4,6 +4,7 @@ import express from 'express';
 import connectDB from './config/db.js';
 import contactRoutes from './routes/contactRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js';
+import courseRoutes from './routes/courseRoutes';
 import cors from 'cors';
 
 //Service/Student :
@@ -38,8 +39,12 @@ app.use('/api/services', servicesRoutes);
 // Contacts
 app.use('/api/contact', contactRoutes);
 
-// Services/Client
+// Services/Notification/Client And Student
 app.use('/api/services/notifications', notifyRoutes);
+
+// Services/Students/Course
+
+app.use('/api/services/students/courses', courseRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
