@@ -1,5 +1,10 @@
+//client/src/pages/services/student/StudentService.jsx
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import "./css/studentServices.css"
+
 import DropdownCard from '../../../components/services/student/DropdownCard.jsx';
 import ServiceCategoryCard from '../../../components/services/student/ServiceCategoryCard.jsx';
 
@@ -17,6 +22,22 @@ const StudentService = () => {
     { title: 'Professional Development', items: ['English Practice', 'BDE Sessions', 'Social Media Handling'] },
     { title: 'Other Skills', items: ['Upcoming'] },
   ];
+
+  const [loading, setLoading] = React.useState(false);
+
+  const handleCourseClick = async (title) => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:5000/api/services/students/courses/search', { params: { title } });
+      const courses = response.data.data;
+      navigate('/services/student/courses', { state: { courses } });
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      alert('Failed to fetch courses. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onClickHandler = (title) => {
     const formattedTitle = title.replace(/\s+/g, "-").toLowerCase();
@@ -44,9 +65,16 @@ const StudentService = () => {
       <div className="mt-8">
 
       <h1 className="text-3xl m-2 font-bold mb-8">Online Cources & Live Session</h1>
+      {/* <div className="dropdown-cards"> Add a new class here */}
         {courseCategories.map((category, index) => (
-          <DropdownCard key={index} title={category.title} items={category.items} />
+          <DropdownCard 
+              key={index} 
+              title={category.title} 
+              items={category.items}
+              onItemClick={(item) => handleCourseClick(item)}
+           />
         ))}
+        {/* </div>   */}
       </div>
     </div>
   );

@@ -1,0 +1,24 @@
+
+
+/* Add these styles to your CSS file */
+.dropdown-cards {
+    display: flex; /* Make dropdown cards flexbox elements */
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+    justify-content: center; /* Center the cards horizontally */ 
+  }
+  
+  /* Media queries to adjust width based on screen size */
+  
+  @media (min-width: 768px) {
+    .dropdown-cards > * {
+      /* Adjust the width here based on your preference */
+      width: calc(50% - 1.5rem); /* Example: 50% width with some margin */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .dropdown-cards > * {
+      /* Adjust the width here based on your preference */
+      width: calc(33% - 1.5rem); /* Example: 33% width with some margin */
+    }
+  }
