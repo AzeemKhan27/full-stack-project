@@ -11,7 +11,7 @@ import  {
 const router = express.Router();
 // const upload = multer({ dest: 'uploads/' }); // Temporary file storage
 
-router.post('/', upload.single('image'), createCourse); // Create a new course
+router.post('/', upload.fields([{ name: 'instructor_image', maxCount: 1 }, { name: 'course_banner_image', maxCount: 1 }]), createCourse); // Create a new course
 router.get('/', getCourses); // Fetch all courses
 router.get('/:id', getCourseById); // Fetch a course by ID
 router.put('/:id', updateCourse); // Update a course
