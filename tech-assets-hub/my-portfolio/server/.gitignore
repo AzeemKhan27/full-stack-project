@@ -3,6 +3,7 @@ Here's a recommended .gitignore file for your Node.js Express.js application:
 # Dependencies
 node_modules/
 package-lock.json
+uploads
 
 # Logs
 *.log

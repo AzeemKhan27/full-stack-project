@@ -104,6 +104,27 @@ export const createCourse = async (req, res) => {
 };
 
 
+// Search courses by title
+export const searchCoursesByTitle = async (req, res) => {
+  try {
+    const { title } = req.query;
+
+    if (!title) {
+      return res.status(400).json({ success: false, message: "Title query parameter is required." });
+    }
+
+    // Search for courses by title (case-insensitive)
+    const courses = await Course.find({ title: { $regex: title, $options: 'i' } })
+      .select('-__v') // Exclude version key
+      .lean(); // Optimize performance by skipping Mongoose hydration
+
+    res.status(200).json({ success: true, data: courses });
+  } catch (error) {
+    console.error('Error searching courses by title:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getCourses = async (req, res) => {
   try {
     const courses = await Course.find();
