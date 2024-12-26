@@ -1,42 +1,108 @@
 
 import cloudinary from '../config/cloudinary.js';
-console.log(cloudinary);
+
 import fs from 'fs';
 
 import Course from '../models/Course.js';
-console.log(Course); 
+
+// export const createCourse = async (req, res) => {
+//   try {
+//     const { title, description, syllabus, instructor, duration, timing, price, faq } = req.body;
+
+//     // Handle Image Upload
+//     let instructor_image_url = '';
+//     let course_banner_image_url = '';
+//     if (req.file) {
+//       const result = await cloudinary.uploader.upload(req.file.path, {
+//         folder: 'courses',
+//       });
+//       instructor_image_url = result.secure_url;
+//       course_banner_image_url = result.secure_url;
+//       fs.unlinkSync(req.file.path);
+//     }
+
+//     const course = await Course.create({
+//       title,
+//       description,
+//       syllabus : JSON.parse(syllabus),
+//       instructor,
+//       duration,
+//       timing,
+//       price,
+//       faq : JSON.parse(faq),
+//       instructor_image: instructor_image_url,
+//       course_banner_image : course_banner_image_url
+//     });
+
+//     res.status(201).json({ success: true, data: course });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+
 
 export const createCourse = async (req, res) => {
   try {
     const { title, description, syllabus, instructor, duration, timing, price, faq } = req.body;
 
-    // Handle Image Upload
-    let imageUrl = '';
-    if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'courses',
-      });
-      imageUrl = result.secure_url;
-      fs.unlinkSync(req.file.path);
+    let instructor_image_url = '';
+    let course_banner_image_url = '';
+
+    // Handle potential errors during image uploads
+    const uploadErrors = [];
+    if (req.files) {
+      for (const file of req.files.instructor_image) {
+        try {
+          const result = await cloudinary.uploader.upload(file.path, {
+            folder: 'courses',
+          });
+          instructor_image_url = result.secure_url;
+          break; // Only use the first uploaded image for instructor_image
+        } catch (error) {
+          console.error('Error uploading instructor image:', error);
+          uploadErrors.push('Error uploading instructor image');
+        }
+      }
+
+      for (const file of req.files.course_banner_image) {
+        try {
+          const result = await cloudinary.uploader.upload(file.path, {
+            folder: 'courses',
+          });
+          course_banner_image_url = result.secure_url;
+          break; // Only use the first uploaded image for course_banner_image
+        } catch (error) {
+          console.error('Error uploading course banner image:', error);
+          uploadErrors.push('Error uploading course banner image');
+        }
+      }
+    }
+
+    // Check for upload errors and return appropriate response
+    if (uploadErrors.length > 0) {
+      return res.status(500).json({ success: false, message: uploadErrors.join(', ') });
     }
 
     const course = await Course.create({
       title,
       description,
-      syllabus : JSON.parse(syllabus),
+      syllabus: JSON.parse(syllabus), // Parse syllabus if it's a string
       instructor,
       duration,
       timing,
       price,
-      faq : JSON.parse(faq),
-      image: imageUrl,
+      faq: JSON.parse(faq), // Parse faq if it's a string
+      instructor_image: instructor_image_url,
+      course_banner_image: course_banner_image_url,
     });
 
     res.status(201).json({ success: true, data: course });
   } catch (error) {
+    console.error('Error creating course:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export const getCourses = async (req, res) => {
   try {
