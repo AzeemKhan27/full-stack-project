@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-const DropdownCard = ({ title, items }) => {
+const DropdownCard = ({ title, items, onItemClick }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,8 +18,11 @@ const DropdownCard = ({ title, items }) => {
       {isOpen && (
         <ul className="mt-2">
           {items.map((item, index) => (
-            <li key={index} className="py-1 hover:text-blue-500">
-              {item}
+            <li 
+                 key={index} 
+                 className="cursor-pointer py-1 hover:text-blue-500"
+                 onClick={() => onItemClick(item)}>
+                  {item}
             </li>
           ))}
         </ul>

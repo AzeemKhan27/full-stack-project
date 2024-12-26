@@ -47,6 +47,7 @@ import store from './redux/store';
 
 // import StudentService from './pages/services/student/StudentService.jsx';
 import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
+import CourseList from './pages/services/student/CourseList.jsx';
 
 function App() {
   return (
@@ -57,15 +58,20 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+
           {/* Services parent route */}
-          <Route path="/services"> {/* element={<ServiceMainPage />} */}
+          <Route path="/services">  {/* element={<ServiceMainPage /> */}
             {/* Nested routes */}
             <Route path="student" element={<StudentService />} />
             <Route path="client" element={<ClientService />} />
 
           </Route>
+
           <Route path="/services/student" element={<StudentService />} />
           <Route path="/services/student/:serviceType" element={<ServiceDetail />} />
+          <Route path="/services/student/courses" element={<CourseList />} />
+
+          
         </Routes>
         <Footer />
       </Router>
