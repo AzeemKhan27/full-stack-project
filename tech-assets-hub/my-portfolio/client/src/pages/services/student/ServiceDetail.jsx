@@ -3,16 +3,16 @@
 //-----------------------------------------------------------
 
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate  } from "react-router-dom";
 import axios from "axios";
-
+import apiService from "../../../services-api/apiService.js"
 
 const ServiceDetail = () => {
   const { serviceType } = useParams();
   const decodedServiceType = decodeURIComponent(serviceType);
   const [form, setForm] = useState({ name: "", age: "", phone: "", email: "", message: "" });
 
-  const BASE_URL_API = import.meta.env.VITE_BASE_URL_API;
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,6 +25,11 @@ const ServiceDetail = () => {
         ...form,
         serviceType: decodedServiceType,
       });
+
+      // const response = await apiService.notifyStudent({
+      //   ...form,
+      //   serviceType: decodedServiceType,
+      // });
       if (response.status === 200) {
         alert("Form submitted successfully.");
       } else {
@@ -35,9 +40,20 @@ const ServiceDetail = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Navigate to the previous page
+  };
+
   return (
+   
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">{decodedServiceType}</h1>
+      <button
+        className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
+        onClick={handleBack}
+      >
+        Back
+        </button>
       <form className="bg-gray-100 p-4 rounded shadow-md" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
