@@ -9,6 +9,8 @@ import cors from 'cors';
 
 //Service/Student :
 import notifyRoutes from './routes/notifyRoutes.js';
+import teamRoutes from './routes/teamRoutes.js';
+
 
 const app = express();
 
@@ -34,6 +36,9 @@ connectDB();
 // Middleware
 app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true })); // For form-data
+
+// Meet My Team Api
+app.use('/api/team-members', teamRoutes);
 
 // Services
 app.use('/api/services', servicesRoutes);
