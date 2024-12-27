@@ -32,7 +32,8 @@ app.use(cors({
 connectDB();
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // For JSON data
+app.use(express.urlencoded({ extended: true })); // For form-data
 
 // Services
 app.use('/api/services', servicesRoutes);
