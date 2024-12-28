@@ -11,6 +11,7 @@ import cors from 'cors';
 import notifyRoutes from './routes/notifyRoutes.js';
 import teamRoutes from './routes/teamRoutes.js';
 
+import multer from 'multer';
 
 const app = express();
 
@@ -37,6 +38,9 @@ connectDB();
 app.use(express.json()); // For JSON data
 app.use(express.urlencoded({ extended: true })); // For form-data
 
+// Multer middleware for parsing multipart/form-data
+const upload = multer();
+
 // Meet My Team Api
 app.use('/api/team-members', teamRoutes);
 
@@ -46,7 +50,7 @@ app.use('/api/services', servicesRoutes);
 app.use('/api/contact', contactRoutes);
 
 // Services/Notification/Client And Student
-app.use('/api/services/notifications', notifyRoutes);
+app.use('/api/services/notifications', upload.none(), notifyRoutes);
 
 // Services/Students/Course
 
