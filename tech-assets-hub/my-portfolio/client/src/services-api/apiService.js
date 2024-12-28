@@ -22,6 +22,16 @@ const apiService = {
       throw error;
     }
   },
+
+  notifyClient: async (data) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/services/notifications/client/notify-client`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error notifying client:', error);
+      throw error;
+    }
+  },
 };
 
 export default apiService;
