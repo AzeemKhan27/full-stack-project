@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Axios for making HTTP requests
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import apiService from '../../../services-api/apiService.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ClientModule = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -10,7 +14,7 @@ const ClientModule = () => {
     message: '',
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const options = [
     {
@@ -47,7 +51,6 @@ const ClientModule = () => {
     setSelectedOption(option);
     setFormSubmitted(false);
     setFormData({ clientName: '', phoneNumber: '', email: '', message: '' });
-    setErrorMessage('');
   };
 
   const handleInputChange = (e) => {
@@ -55,50 +58,35 @@ const ClientModule = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handlePhoneChange = (value, country) => {
+    setFormData((prev) => ({ ...prev, phoneNumber: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage('');
-    try {
-      const response = await axios.post('http://localhost:5000/api/services/client/notify-client', {
-        clientName: formData.clientName,
-        phoneNumber: formData.phoneNumber,
-        email: formData.email,
-        message: formData.message,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-       }
-      );
+    setIsLoading(true);
 
-      if (response.status === 200) {
-        setFormSubmitted(true);
-      } else {
-        throw new Error('Failed to send the email.');
-      }
+    const payload = {
+      ...formData,
+      serviceType: selectedOption.name,
+    };
+
+    try {
+      const response = await apiService.notifyClient(payload);
+      console.log(response);
+      setFormSubmitted(true);
+      toast.success('Form data submitted successfully!');
     } catch (error) {
-      console.error('Email sending error:', error);
-      setErrorMessage('Failed to submit the form. Please try again later.');
+      console.error('Error submitting form:', error.response?.data || error.message);
+      toast.error('Error submitting form: ' + (error.response?.data || error.message));
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen">
-      {/* Background Section */}
-      {selectedOption && (
-        <div
-          className="relative bg-cover bg-center text-white py-20 px-6 transition-all duration-300"
-          style={{
-            backgroundImage: `url(${selectedOption.image})`,
-          }}
-        >
-          <div className="max-w-3xl mx-auto text-center bg-black bg-opacity-50 p-6 rounded-md">
-            <h2 className="text-4xl font-bold mb-4">{selectedOption.name}</h2>
-            <p className="text-lg">{selectedOption.description}</p>
-          </div>
-        </div>
-      )}
+      <ToastContainer />
 
       {/* Options Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6 mt-8">
@@ -121,6 +109,21 @@ const ClientModule = () => {
         ))}
       </div>
 
+      {/* Background Section */}
+      {selectedOption && (
+        <div
+          className="relative bg-cover bg-center text-white py-20 px-6 transition-all duration-300"
+          style={{
+            backgroundImage: `url(${selectedOption.image})`,
+          }}
+        >
+          <div className="max-w-3xl mx-auto text-center bg-black bg-opacity-50 p-6 rounded-md">
+            <h2 className="text-4xl font-bold mb-4">{selectedOption.name}</h2>
+            <p className="text-lg">{selectedOption.description}</p>
+          </div>
+        </div>
+      )}
+
       {/* Form Section */}
       {selectedOption && (
         <div className="p-6 mt-8 bg-gray-100 shadow-lg rounded-lg max-w-3xl mx-auto">
@@ -141,12 +144,14 @@ const ClientModule = () => {
             </div>
             <div>
               <label className="block font-medium mb-1">Phone Number</label>
-              <input
-                type="tel"
-                name="phoneNumber"
+              <PhoneInput
+                country={'us'}
                 value={formData.phoneNumber}
-                onChange={handleInputChange}
-                required
+                onChange={handlePhoneChange}
+                inputProps={{
+                  name: 'phoneNumber',
+                  required: true,
+                }}
                 className="w-full border rounded-md p-2"
               />
             </div>
@@ -174,8 +179,9 @@ const ClientModule = () => {
             <button
               type="submit"
               className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 w-full"
+              disabled={isLoading}
             >
-              Submit
+              {isLoading ? 'Submitting...' : 'Submit'}
             </button>
           </form>
           {formSubmitted && (
@@ -183,14 +189,10 @@ const ClientModule = () => {
               Form submitted successfully!
             </p>
           )}
-          {errorMessage && (
-            <p className="text-red-600 mt-4 text-center">
-              {errorMessage}
-            </p>
-          )}
         </div>
       )}
     </div>
   );
 };
+
 export default ClientModule;
