@@ -13,7 +13,7 @@ const profile = "https://media.istockphoto.com/id/1437816897/photo/business-woma
 const testimonials = [
   {
     name: 'Ashwini',
-    feedback: 'The web development service was outstanding! My website looks amazing and functions perfectly.',
+    feedback: 'The web development service was outstanding! My website looks amazing and functions perfectly. 💻 Mr. Azeem Khan is very professional and helpful; he supported me during every challenge I faced while building the project. I want to give him 10/10 because of his helpful nature and humility—he even helped me free of cost. 🤝💯',
     designation: 'MCA Student, Jain University(Bangaluru)',
     avatar: profile, // You can replace this with an actual image URL
   },
