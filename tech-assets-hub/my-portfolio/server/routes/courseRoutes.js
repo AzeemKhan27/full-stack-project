@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from '../utils/multer.js';
+import { uploadDisk } from '../utils/multer.js';
 import  {
   createCourse,
   getCourses,
@@ -11,7 +11,7 @@ import  {
 
 const router = express.Router();
 
-const uploadMiddleware = upload.fields([
+const uploadMiddleware = uploadDisk.fields([
   { name: 'instructor_image', maxCount: 1 }, 
   { name: 'course_banner_image', maxCount: 1 },
   { name: 'instructor_image_2', maxCount: 1 },

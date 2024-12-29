@@ -1,6 +1,6 @@
 // routes/teamRoutes.js
 import express from 'express';
-import upload from '../utils/multer.js';
+import { uploadDisk } from '../utils/multer.js';
 import {   
     createTeamMember,
     getAllTeamMembers,
@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-const uploadMiddleware = upload.fields([
+const uploadMiddleware = uploadDisk.fields([
   { name: 'image', maxCount: 1 }, 
 ])
 

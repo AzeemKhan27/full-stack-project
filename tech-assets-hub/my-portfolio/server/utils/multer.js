@@ -1,6 +1,7 @@
 import multer from 'multer';
 
-const storage = multer.diskStorage({
+// Disk storage configuration
+const storageDisk = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
   },
@@ -9,9 +10,17 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ 
-    storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+const uploadDisk = multer({
+  storage: storageDisk,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 });
 
-export default upload;
+// Memory storage configuration
+const storageMemory = multer.memoryStorage();
+
+const uploadMemory = multer({
+  storage: storageMemory,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+});
+
+export { uploadDisk, uploadMemory };
