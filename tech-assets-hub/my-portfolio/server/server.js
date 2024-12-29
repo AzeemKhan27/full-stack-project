@@ -9,7 +9,13 @@ import cors from 'cors';
 
 //Service/Student :
 import notifyRoutes from './routes/notifyRoutes.js';
+
+//About Page : Team Members
 import teamRoutes from './routes/teamRoutes.js';
+
+//Testimonial
+import testimonialRoutes from './routes/testimonialRoutes.js'; // Import the new route
+
 
 import multer from 'multer';
 
@@ -55,6 +61,9 @@ app.use('/api/services/notifications', upload.none(), notifyRoutes);
 // Services/Students/Course
 
 app.use('/api/services/students/courses', courseRoutes);
+
+// Testimonials
+app.use('/api/testimonials', testimonialRoutes); // Add the new route
 
 // Error handling middleware
 app.use((err, req, res, next) => {
