@@ -32,6 +32,18 @@ const apiService = {
       throw error;
     }
   },
+
+  // New method to fetch testimonials
+  getTestimonials: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/testimonials`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      throw error;
+    }
+  },
+  
 };
 
 export default apiService;
