@@ -43,7 +43,18 @@ const apiService = {
       throw error;
     }
   },
-  
+
+  // Join Our Team API's
+  submitJoinerRequest: async (data) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/services/notifications/about-joiner-request`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error submitting joiner request:', error);
+      throw error.response?.data || { message: 'Something went wrong!' };
+    }
+  },
+
 };
 
 export default apiService;
