@@ -51,6 +51,9 @@ const apiService = {
       return response.data;
     } catch (error) {
       console.error('Error submitting joiner request:', error);
+      if (error.response?.status === 409) {
+        throw { message: 'This email is already registered. Please use a different email.' };
+      }
       throw error.response?.data || { message: 'Something went wrong!' };
     }
   },

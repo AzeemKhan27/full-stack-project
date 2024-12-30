@@ -1,7 +1,8 @@
-// my-portfolio/client/src/components/sections/Signup.jsx
+// src/components/sections/JoinOurTeam.jsx
 
 import React, { useState } from 'react';
 import apiService from '../../services-api/apiService.js';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 const JoinOurTeam = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const JoinOurTeam = () => {
   });
 
   const [statusMessage, setStatusMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,15 +28,45 @@ const JoinOurTeam = () => {
     }));
   };
 
+  const handleCountryChange = (val) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      country: val,
+    }));
+  };
+
+  const handleRegionChange = (val) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      state: val,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setStatusMessage('');
 
     try {
       const response = await apiService.submitJoinerRequest(formData);
-      setStatusMessage(response.data.message);
+      setStatusMessage(response.message);
+      // Clear form fields after successful submission
+      setFormData({
+        name: '',
+        country: '',
+        state: '',
+        fullAddress: '',
+        phoneNo: '',
+        emailId: '',
+        qualification: '',
+        skills: '',
+        experience: '',
+      });
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Something went wrong!';
       setStatusMessage(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,24 +89,23 @@ const JoinOurTeam = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="country" className="block text-gray-700 mb-2">Country</label>
-            <input
-              type="text"
+            <CountryDropdown
               id="country"
               name="country"
               value={formData.country}
-              onChange={handleChange}
+              onChange={handleCountryChange}
               required
               className="w-full px-4 py-2 border rounded"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="state" className="block text-gray-700 mb-2">State</label>
-            <input
-              type="text"
+            <RegionDropdown
               id="state"
               name="state"
+              country={formData.country}
               value={formData.state}
-              onChange={handleChange}
+              onChange={handleRegionChange}
               required
               className="w-full px-4 py-2 border rounded"
             />
@@ -104,7 +135,7 @@ const JoinOurTeam = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="emailId" className="block text-gray-700 mb-2">Email</label>
+            <label htmlFor="emailId" className="block text-gray-700 mb-2">Email ID</label>
             <input
               type="email"
               id="emailId"
@@ -147,17 +178,19 @@ const JoinOurTeam = () => {
               name="experience"
               value={formData.experience}
               onChange={handleChange}
+              required
               className="w-full px-4 py-2 border rounded"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            disabled={loading}
           >
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
+          {statusMessage && <p className="mt-4 text-red-500">{statusMessage}</p>}
         </form>
-        {statusMessage && <p className="text-center mt-4 text-red-600">{statusMessage}</p>}
       </div>
     </section>
   );

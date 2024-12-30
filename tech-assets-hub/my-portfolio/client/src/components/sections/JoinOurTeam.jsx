@@ -1,7 +1,8 @@
-// my-portfolio/client/src/components/sections/Signup.jsx
-
 import React, { useState } from 'react';
 import apiService from '../../services-api/apiService.js';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const JoinOurTeam = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ const JoinOurTeam = () => {
     experience: '',
   });
 
-  const [statusMessage, setStatusMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,20 +27,55 @@ const JoinOurTeam = () => {
     }));
   };
 
+  const handleCountryChange = (val) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      country: val,
+    }));
+  };
+
+  const handleRegionChange = (val) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      state: val,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await apiService.submitJoinerRequest(formData);
-      setStatusMessage(response.data.message);
+      toast.success(response.message);
+      // Clear form fields after successful submission
+      setFormData({
+        name: '',
+        country: '',
+        state: '',
+        fullAddress: '',
+        phoneNo: '',
+        emailId: '',
+        qualification: '',
+        skills: '',
+        experience: '',
+      });
+
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Something went wrong!';
-      setStatusMessage(errorMessage);
+      if (errorMessage === 'You have already requested to join our team.') {
+        toast.error('You have already requested to join our team.');
+      } else {
+        toast.error(errorMessage);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <section className="py-16 bg-gray-100">
+      <ToastContainer />
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-6">Join Our Freelancing Team</h2>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 rounded shadow">
@@ -57,24 +93,23 @@ const JoinOurTeam = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="country" className="block text-gray-700 mb-2">Country</label>
-            <input
-              type="text"
+            <CountryDropdown
               id="country"
               name="country"
               value={formData.country}
-              onChange={handleChange}
+              onChange={handleCountryChange}
               required
               className="w-full px-4 py-2 border rounded"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="state" className="block text-gray-700 mb-2">State</label>
-            <input
-              type="text"
+            <RegionDropdown
               id="state"
               name="state"
+              country={formData.country}
               value={formData.state}
-              onChange={handleChange}
+              onChange={handleRegionChange}
               required
               className="w-full px-4 py-2 border rounded"
             />
@@ -104,7 +139,7 @@ const JoinOurTeam = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="emailId" className="block text-gray-700 mb-2">Email</label>
+            <label htmlFor="emailId" className="block text-gray-700 mb-2">Email ID</label>
             <input
               type="email"
               id="emailId"
@@ -147,17 +182,18 @@ const JoinOurTeam = () => {
               name="experience"
               value={formData.experience}
               onChange={handleChange}
+              required
               className="w-full px-4 py-2 border rounded"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            disabled={loading}
           >
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
         </form>
-        {statusMessage && <p className="text-center mt-4 text-red-600">{statusMessage}</p>}
       </div>
     </section>
   );
