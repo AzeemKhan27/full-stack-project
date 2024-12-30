@@ -31,9 +31,9 @@
   color: rgb(31 41 55 / var(--tw-text-opacity));
 } */
 
+/* 2 */
 
-
-.swiper-pagination-bullets .swiper-pagination-bullet {
+/* .swiper-pagination-bullets .swiper-pagination-bullet {
   width: 16px !important;
   height: 4px !important;
   border-radius: 5px !important;
@@ -62,4 +62,23 @@
 .swiper-slide.swiper-slide-active > .group .slide_active\:text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+} */
+
+
+/* 3 */
+
+/* TestimonialSlider.css */
+.slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 33.33%; /* Adjust this for 2 or 3 cards */
+  box-sizing: border-box;
 }
