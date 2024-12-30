@@ -45,10 +45,13 @@ import StudentService from './pages/services/student/StudentService.jsx';
 import ClientService from './pages/services/client/ClientService.jsx';
 import store from './redux/store';
 
+import CallToAction from './components/sections/AboutPage/CallToAction';
+import Signup from './components/sections/JoinOurTeam.jsx';
+
 // import StudentService from './pages/services/student/StudentService.jsx';
 import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
 import CourseList from './pages/services/student/CourseList.jsx';
-
+// import Signup from './components/sections/Signup';
 function App() {
   return (
     <Provider store={store}>
@@ -67,6 +70,14 @@ function App() {
 
           </Route>
 
+          
+          {/* About Page | Join Team */}
+          <Route path="/">  
+            {/* Nested routes */}
+            <Route path="join-our-team" element={<Signup />} />
+          </Route>
+
+
           <Route path="/services/student" element={<StudentService />} />
           <Route path="/services/student/:serviceType" element={<ServiceDetail />} />
           <Route path="/services/student/courses" element={<CourseList />} />
@@ -74,6 +85,7 @@ function App() {
           
         </Routes>
         <Footer />
+
       </Router>
     </Provider>
   );
