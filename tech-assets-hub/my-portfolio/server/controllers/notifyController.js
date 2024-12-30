@@ -90,3 +90,85 @@ export const sendStudentNotifications = async (req, res) => {
     res.status(500).json({ message: 'Failed to send emails.', error });
   }
 };
+
+
+// Send Joiner Notifications
+
+import Joiner from '../models/TeamJoiner.js';
+
+export const sendJoinerNotification = async (req, res) => {
+  const {
+    name,
+    country,
+    state,
+    fullAddress,
+    phoneNo,
+    emailId,
+    qualification,
+    skills,
+    experience,
+  } = req.body;
+
+  if (!name || !country || !state || !phoneNo || !emailId || !qualification || !skills) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    // Check if the joiner is already registered
+    const existingJoiner = await Joiner.findOne({ emailId });
+    if (existingJoiner) {
+      return res
+        .status(409)
+        .json({ message: 'You have already requested to join our team.' });
+    }
+
+    // Save joiner details to the database
+    const newJoiner = await Joiner.create({
+      name,
+      country,
+      state,
+      fullAddress,
+      phoneNo,
+      emailId,
+      qualification,
+      skills,
+      experience,
+    });
+
+    // Notify Admin
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL,
+      subject: `New Joiner Application`,
+      html: `
+        <h2>New Joiner Application</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Country:</strong> ${country}</p>
+        <p><strong>State:</strong> ${state}</p>
+        <p><strong>Address:</strong> ${fullAddress}</p>
+        <p><strong>Phone:</strong> ${phoneNo}</p>
+        <p><strong>Email:</strong> ${emailId}</p>
+        <p><strong>Qualification:</strong> ${qualification}</p>
+        <p><strong>Skills:</strong> ${skills}</p>
+        <p><strong>Experience:</strong> ${experience}</p>
+      `,
+    });
+
+    // Notify Joiner
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: emailId,
+      subject: `Application Received`,
+      html: `
+        <h2>Hi ${name},</h2>
+        <p>We got your details. Let us go through your details and skills. We will contact you soon if you are eligible to join our team.</p>
+        <p>Best regards,<br>Team Tech Assets Hub.</p>
+      `,
+    });
+
+    res.status(200).json({ message: 'Notifications sent successfully!' });
+  } catch (error) {
+    console.error('Email sending error:', error);
+    res.status(500).json({ message: 'Failed to send emails.', error });
+  }
+};
