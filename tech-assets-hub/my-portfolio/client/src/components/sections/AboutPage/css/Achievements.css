@@ -1,0 +1,19 @@
+/* Achievements.css */
+.bg-gradient-animated_achievement {
+    background: linear-gradient(45deg, #edecef, #f8c3e9, #d9fce7, #f5f6f6);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+  }
+  
+  @keyframes gradientAnimationAchievement {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  

@@ -1,6 +1,6 @@
 /* CallToAction.css */
-.cta-container {
-    background-color: #007bff; /* Bootstrap primary color */
+/* .cta-container {
+    background-color: #007bff; 
     color: white;
     padding: 40px;
     text-align: center;
@@ -19,8 +19,8 @@
   }
   
   .cta-button {
-    background-color: #ffffff; /* White background for the button */
-    color: #007bff; /* Bootstrap primary color */
+    background-color: #ffffff; 
+    color: #007bff; 
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
@@ -29,6 +29,53 @@
   }
   
   .cta-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
     color: white;
+  } */
+
+
+  /* CallToAction.css */
+.cta-container {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  padding: 40px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 20px 0;
+  animation: gradientAnimation 5s infinite alternate;
+}
+
+.cta-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.cta-description {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background-color: #ffffff; /* White background for the button */
+  color: #007bff; /* Bootstrap primary color */
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: white;
+  transform: scale(1.05);
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background: linear-gradient(45deg, #007bff, #0056b3);
   }
+  100% {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+  }
+}

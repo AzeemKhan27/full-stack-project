@@ -7,8 +7,6 @@ import { useParams, useNavigate  } from "react-router-dom";
 
 import apiService from "../../../services-api/apiService.js"
 
-const BASE_URL_API = import.meta.env.VITE_BASE_URL_API;
-
 const ServiceDetail = () => {
   const { serviceType } = useParams();
   const decodedServiceType = decodeURIComponent(serviceType);
