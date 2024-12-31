@@ -1,11 +1,11 @@
 /* OurValues.css */
-.bg-gradient-animated {
-    background: linear-gradient(45deg, #cbbdee, #e8f597, #ecf2ee, #97d4f2);
+.bg-gradient-animated_our_values {
+    background: linear-gradient(45deg, #cbbdee, #fef6f1, #ecf2ee, #97d4f2);
     background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
+    animation: gradientAnimationOurValues 10s ease infinite;
   }
   
-  @keyframes gradientAnimation {
+  @keyframes gradientAnimationOurValues {
     0% {
       background-position: 0% 50%;
     }

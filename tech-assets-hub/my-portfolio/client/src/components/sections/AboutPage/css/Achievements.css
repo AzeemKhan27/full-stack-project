@@ -2,7 +2,7 @@
 .bg-gradient-animated_achievement {
     background: linear-gradient(45deg, #edecef, #f8c3e9, #d9fce7, #f5f6f6);
     background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
+    animation: gradientAnimationAchievement 10s ease infinite;
   }
   
   @keyframes gradientAnimationAchievement {

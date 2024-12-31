@@ -69,10 +69,11 @@ const services = [
     icon: '🌐',
   },
   {
-    title: 'Devops',
-    description: '',
+    title: 'DevOps',
+    description: 'Streamlines development and operations for faster, reliable software delivery.',
     icon: '🌐',
-  },
+  }
+  
 ];
 
 const Services = () => {

@@ -1,11 +1,11 @@
 /* About.css */
-.bg-gradient-animated {
+.bg-gradient-animated_about_us {
     background: linear-gradient(45deg, #ffffff,#43a4c8,#e2e7bc, #ffffff);
     background-size: 400% 400%;
-    animation: gradientAnimation 10s ease infinite;
+    animation: gradientAnimationAboutUs 10s ease infinite;
   }
   
-  @keyframes gradientAnimation {
+  @keyframes gradientAnimationAboutUs {
     0% {
       background-position: 0% -50%;
     }

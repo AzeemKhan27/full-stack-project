@@ -13,8 +13,6 @@ const transporter = nodemailer.createTransport({
 
 export const sendClientNotification = async (req, res) => {
   const { clientName, phoneNumber, email, message, serviceType } = req.body;
-
-  console.log("BODY : ", req.body);
   
   if (!clientName || !email || !phoneNumber || !serviceType) {
     return res.status(400).json({ message: 'All fields are required.' });

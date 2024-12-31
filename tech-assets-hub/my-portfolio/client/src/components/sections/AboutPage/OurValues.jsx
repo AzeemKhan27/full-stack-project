@@ -13,7 +13,7 @@ const values = [
 
 const OurValues = () => {
   return (
-    <section className="py-16 bg-gradient-animated">
+    <section className="py-16 bg-gradient-animated_our_values">
       <div className="container mx-auto text-center px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}

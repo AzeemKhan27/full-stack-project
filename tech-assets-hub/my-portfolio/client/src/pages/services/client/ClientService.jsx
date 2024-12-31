@@ -112,24 +112,29 @@ const ClientModule = () => {
       {/* Background Section */}
       {selectedOption && (
         <div
-          className="relative bg-cover bg-center text-white py-20 px-6 transition-all duration-300"
+          className="relative bg-cover bg-center text-black py-20 px-6 transition-all duration-300"
           style={{
             backgroundImage: `url(${selectedOption.image})`,
           }}
         >
-          <div className="max-w-3xl mx-auto text-center bg-black bg-opacity-50 p-6 rounded-md">
-            <h2 className="text-4xl font-bold mb-4">{selectedOption.name}</h2>
-            <p className="text-lg">{selectedOption.description}</p>
+          <div className="max-w-3xl mx-auto text-center bg-blue bg-opacity-50 p-6 rounded-md">
+            {/* <h2 className="text-4xl font-bold mb-4">{selectedOption.name}</h2> */}
+            <h1 className="text-3xl">{selectedOption.description}</h1>
+            {/* <img src="" alt="qqq" /> */}
+            
           </div>
+         
         </div>
       )}
 
       {/* Form Section */}
       {selectedOption && (
-        <div className="p-6 mt-8 bg-gray-100 shadow-lg rounded-lg max-w-3xl mx-auto">
+        <div className="p-6 bg-blue-100 shadow-lg rounded-lg max-w-3xl mx-auto">
+         
           <h3 className="text-2xl font-semibold mb-4 text-center">
-            {selectedOption.name}
+            {selectedOption.name} Form
           </h3>
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block font-medium mb-1">Client Name</label>
@@ -177,9 +182,9 @@ const ClientModule = () => {
               />
             </div>
             <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 w-full"
-              disabled={isLoading}
+                type="submit"
+                className="bg-gradient-to-r from-blue-800 to-blue-400 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-800 transition duration-300 w-full"
+                disabled={isLoading}
             >
               {isLoading ? 'Submitting...' : 'Submit'}
             </button>

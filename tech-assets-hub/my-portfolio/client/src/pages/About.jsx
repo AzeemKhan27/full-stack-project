@@ -15,14 +15,14 @@ const freelancers = [
     name: 'Azeem Khan',
     role: 'Fullstack Developer',
     experience: '3+ years',
-    skills: ['Figma', 'NodeJS', 'ExpressJS/NestJS', 'TypeScript', 'ReactJS/AngularJS/NextJS','Problem-Solving Skills'],
+    skills: ['Node Js', 'Express Js', 'TypeScript', 'React Js', 'AngularJS','Problem-Solving Skills'],
     image: '../public/profiles/AzeemKhan.jpg',
   },
   {
     name: 'Devki Nandan Pandey',
     role: 'Mobile App Developer',
     experience: '4+ years',
-    skills: ['Kotlin','React Native', 'Swift'],
+    skills: ['Java','Android','Kotlin','React Native','Swift'],
     image: '../public/profiles/DevkiNandanPandey.jpg',
   },
 ];
@@ -67,7 +67,7 @@ const About = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="bg-gradient-animated w-full md:w-1/3 xl:w-1/4 p-6 text-center bg-white rounded-lg shadow-md"
+            className="bg-gradient-animated_about_us w-full md:w-1/3 xl:w-1/4 p-6 text-center bg-white rounded-lg shadow-md"
           >
             <img src={freelancer.image} alt={`${freelancer.name} Image`} className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
             <h2 className="text-lg font-bold mb-2">{freelancer.name}</h2>

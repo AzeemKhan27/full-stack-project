@@ -25,15 +25,15 @@ const Home = () => {
 
       <div className="container mx-auto flex flex-col items-center justify-center p-8">
         <div className="bg-white shadow-lg rounded-lg p-10 mt-8 max-w-md w-full text-center">
-          <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-blue-600 mb-4 animate-pulse">
+          <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-800 mb-4 animate-pulse">
             {greet}
           </h2>
           <p className="text-gray-700 text-lg mb-6">
             Welcome to our amazing platform! Explore and enjoy the best content tailored just for you.
           </p>
-          <button className="bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+          <a href="/contact" className="bg-gradient-to-r from-blue-800 to-blue-400 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
             Get Started
-          </button>
+          </a>
         </div>
 
         {/* About Our Freelance Section */}
