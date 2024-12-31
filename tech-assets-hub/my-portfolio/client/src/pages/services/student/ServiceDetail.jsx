@@ -4,7 +4,7 @@
 
 import React, { useState } from "react";
 import { useParams, useNavigate  } from "react-router-dom";
-import axios from "axios";
+
 import apiService from "../../../services-api/apiService.js"
 
 const BASE_URL_API = import.meta.env.VITE_BASE_URL_API;
@@ -25,15 +25,15 @@ const ServiceDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL_API}/api/services/notifications/student/notify-student`, {
-        ...form,
-        serviceType: decodedServiceType,
-      });
-
-      // const response = await apiService.notifyStudent({
+      // const response = await axios.post(`${BASE_URL_API}/api/services/notifications/student/notify-student`, {
       //   ...form,
       //   serviceType: decodedServiceType,
       // });
+
+      const response = await apiService.notifyStudent({
+        ...form,
+        serviceType: decodedServiceType,
+      });
 
       console.log("RESPONSE: " , response.status); 
 

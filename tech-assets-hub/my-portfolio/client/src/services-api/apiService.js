@@ -4,6 +4,17 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_BASE_URL_API;
 
 const apiService = {
+
+  //Contact Form Api:
+  contactForm: async (data) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/contact`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      throw error;
+    }
+  },
   getTeamMembers: async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/team-members`);
