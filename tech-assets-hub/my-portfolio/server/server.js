@@ -7,6 +7,9 @@ import servicesRoutes from './routes/servicesRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import cors from 'cors';
 
+// Payment Integration 
+import paymentRoutes from './routes/paymentRoutes.js';
+
 //Service/Student :
 import notifyRoutes from './routes/notifyRoutes.js';
 
@@ -64,6 +67,9 @@ app.use('/api/services/students/courses', courseRoutes);
 
 // Testimonials
 app.use('/api/testimonials', testimonialRoutes); // Add the new route
+
+// Payments Api
+app.use('/api/payments', paymentRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
