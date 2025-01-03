@@ -17,6 +17,7 @@ const DropdownCard = ({ title, items, onItemClick }) => {
       </div>
       {isOpen && (
         <ul className="mt-2">
+          
           {items.map((item, index) => (
             <li 
                  key={index} 
