@@ -67,9 +67,9 @@
 // }
 
 // export default Slider;
-
 import { Carousel, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from 'react';
+import "../pages/css/Slider.css"
 
 const Slider = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -108,8 +108,7 @@ const Slider = ({ images }) => {
         <img
           src={images[currentSlide]}
           alt={`Slide ${currentSlide + 1}`}
-          className="w-full h-64 object-cover"
-          style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }}
+          className="w-full h-64 object-cover cloudy-shape"
         />
         <div className="absolute inset-0 grid h-full w-full place-items-center bg-gradient-to-r from-black to-transparent">
           <div className="w-3/4 text-center md:w-2/4">
@@ -135,4 +134,3 @@ const Slider = ({ images }) => {
 }
 
 export default Slider;
-
