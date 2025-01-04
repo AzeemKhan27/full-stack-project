@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 const CourseList = () => {
   const location = useLocation();
   const { courses } = location.state || { courses: [] };
+
 
   if (!courses.length) {
     return (
@@ -12,6 +13,12 @@ const CourseList = () => {
       </div>
     );
   }
+
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1); // Navigate to the previous page
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -41,7 +48,13 @@ const CourseList = () => {
                 <p className="text-gray-600 text-sm mb-4">
                   {course.description || 'No description available.'}
                 </p>
-
+                <div className="flex justify-between items-center text-gray-700 text-sm mb-4">
+                  <button 
+                  className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
+                  onClick={handleBack}>
+                    back
+                  </button>
+                  </div>
                 <div className="flex justify-between items-center text-gray-700 text-sm mb-4">
                   <span>Duration: {course.duration}</span>
                   <span>Price: ₹{course.price}</span>
