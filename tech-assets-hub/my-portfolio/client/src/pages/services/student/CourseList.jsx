@@ -5,20 +5,28 @@ const CourseList = () => {
   const location = useLocation();
   const { courses } = location.state || { courses: [] };
 
-
-  if (!courses.length) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-lg font-semibold text-gray-600">Loading...</p>
-      </div>
-    );
-  }
-
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate(-1); // Navigate to the previous page
   };
+
+  if (!courses.length) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-between items-center text-gray-700 text-sm mb-4">
+                  <button 
+                  className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
+                  onClick={handleBack}>
+                    back
+                  </button>
+                  </div>
+        <p className="text-lg font-semibold text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+ 
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -48,6 +56,7 @@ const CourseList = () => {
                 <p className="text-gray-600 text-sm mb-4">
                   {course.description || 'No description available.'}
                 </p>
+
                 <div className="flex justify-between items-center text-gray-700 text-sm mb-4">
                   <button 
                   className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
@@ -55,6 +64,7 @@ const CourseList = () => {
                     back
                   </button>
                   </div>
+
                 <div className="flex justify-between items-center text-gray-700 text-sm mb-4">
                   <span>Duration: {course.duration}</span>
                   <span>Price: ₹{course.price}</span>
