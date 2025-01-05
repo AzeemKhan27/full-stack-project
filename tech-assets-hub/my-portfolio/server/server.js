@@ -1,82 +1,85 @@
-// server/server.js
 
-import express from 'express';
-import connectDB from './config/db.js';
-import contactRoutes from './routes/contactRoutes.js';
-import servicesRoutes from './routes/servicesRoutes.js';
-import courseRoutes from './routes/courseRoutes.js';
-import cors from 'cors';
+// // server/server.js
 
-// Payment Integration 
-import paymentRoutes from './routes/paymentRoutes.js';
+// import express from 'express';
+// import connectDB from './config/db.js';
+// import contactRoutes from './routes/contactRoutes.js';
+// import servicesRoutes from './routes/servicesRoutes.js';
+// import courseRoutes from './routes/courseRoutes.js';
+// import cors from 'cors';
 
-//Service/Student :
-import notifyRoutes from './routes/notifyRoutes.js';
+// import config from './config/config.js';
 
-//About Page : Team Members
-import teamRoutes from './routes/teamRoutes.js';
+// // Payment Integration 
+// import paymentRoutes from './routes/paymentRoutes.js';
 
-//Testimonial
-import testimonialRoutes from './routes/testimonialRoutes.js'; // Import the new route
+// //Service/Student :
+// import notifyRoutes from './routes/notifyRoutes.js';
 
+// //About Page : Team Members
+// import teamRoutes from './routes/teamRoutes.js';
 
-import multer from 'multer';
-
-const app = express();
+// //Testimonial
+// import testimonialRoutes from './routes/testimonialRoutes.js'; // Import the new route
 
 
-// Load environment variables
-import dotenv from 'dotenv';
-dotenv.config();
+// import multer from 'multer';
 
-// Use CORS middleware
-
-app.use(cors({
-
-    origin: 'http://localhost:5173' // Allow requests from this origin
-
-}));
-
-// Initialize Express app
 // const app = express();
 
-// Connect to MongoDB
-connectDB();
 
-// Middleware
-app.use(express.json()); // For JSON data
-app.use(express.urlencoded({ extended: true })); // For form-data
+// // Load environment variables
+// import dotenv from 'dotenv';
+// dotenv.config();
 
-// Multer middleware for parsing multipart/form-data
-const upload = multer();
+// // Use CORS middleware
 
-// Meet My Team Api
-app.use('/api/team-members', teamRoutes);
+// app.use(cors({
 
-// Services
-app.use('/api/services', servicesRoutes);
-// Contacts
-app.use('/api/contact', contactRoutes);
+//     origin: 'http://localhost:5173' // Allow requests from this origin
 
-// Services/Notification/Client And Student
-app.use('/api/services/notifications', upload.none(), notifyRoutes);
+// }));
 
-// Services/Students/Course
+// // Initialize Express app
+// // const app = express();
 
-app.use('/api/services/students/courses', courseRoutes);
+// // Connect to MongoDB
+// connectDB();
 
-// Testimonials
-app.use('/api/testimonials', testimonialRoutes); // Add the new route
+// // Middleware
+// app.use(express.json()); // For JSON data
+// app.use(express.urlencoded({ extended: true })); // For form-data
 
-// Payments Api
-app.use('/api/payments', paymentRoutes);
+// // Multer middleware for parsing multipart/form-data
+// const upload = multer();
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error('Unhandled error:', err.message);
-    res.status(500).json({ message: 'An unexpected error occurred.' });
-});  
+// // Meet My Team Api
+// app.use('/api/team-members', teamRoutes);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// // Services
+// app.use('/api/services', servicesRoutes);
+// // Contacts
+// app.use('/api/contact', contactRoutes);
+
+// // Services/Notification/Client And Student
+// app.use('/api/services/notifications', upload.none(), notifyRoutes);
+
+// // Services/Students/Course
+
+// app.use('/api/services/students/courses', courseRoutes);
+
+// // Testimonials
+// app.use('/api/testimonials', testimonialRoutes); // Add the new route
+
+// // Payments Api
+// app.use('/api/payments', paymentRoutes);
+
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//     console.error('Unhandled error:', err.message);
+//     res.status(500).json({ message: 'An unexpected error occurred.' });
+// });  
+
+// // Start server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
