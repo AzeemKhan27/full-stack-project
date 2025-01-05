@@ -8,16 +8,24 @@ const contactController = {
   async createContact(req, res) {
     try {
       const { name, phoneNumber, email, message } = req.body;
-     
+
       // Input validation
       if (!name || !email || !message) {
-        return res.status(400).json({ message: 'Name, email, phoneNumber, and message are required.' });
+        return res.status(400).json({ message: 'Name, email, and message are required.' });
       }
 
       if (!validator.isEmail(email)) {
         return res.status(400).json({ message: 'Invalid email address.' });
       }
 
+      // Check if the user has already submitted a request within the last 24 hours
+      const existingContact = await contactService.findRecentContact({ email, phoneNumber, name });
+
+      if (existingContact) {
+        return res.status(400).json({ message: 'You have already submitted a request. Our team will contact you shortly. If you haven\'t received a response within 1-2 days, you can submit again after 24 hours.' });
+      }
+
+      // Create a new contact
       const newContact = await contactService.createContact({ name, phoneNumber, email, message });
 
       // Send email after creating the contact
