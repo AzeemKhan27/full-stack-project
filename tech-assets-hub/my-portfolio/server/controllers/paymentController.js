@@ -2,6 +2,7 @@
 import Razorpay from 'razorpay';
 import config from '../config/config.js';
 import Course from '../models/Course.js';
+import crypto from 'crypto';
 
 const razorpay = new Razorpay({
   key_id: config.razorpayKeyId,

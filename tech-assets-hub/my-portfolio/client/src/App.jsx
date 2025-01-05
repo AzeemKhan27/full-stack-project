@@ -12,13 +12,13 @@ import StudentService from './pages/services/student/StudentService.jsx';
 import ClientService from './pages/services/client/ClientService.jsx';
 import store from './redux/store';
 
-// import CallToAction from './components/sections/AboutPage/CallToAction';
 import Signup from './components/sections/JoinOurTeam.jsx';
 
-// import StudentService from './pages/services/student/StudentService.jsx';
 import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
 import CourseList from './pages/services/student/CourseList.jsx';
-// import Signup from './components/sections/Signup';
+
+import './index.css';
+
 function App() {
   return (
     <Provider store={store}>

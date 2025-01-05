@@ -69,6 +69,20 @@ const apiService = {
     }
   },
 
+
+  // PAYMENT GATEWAY API's
+  createOrder: async (courseId) => {
+    const response = await axios.post(`${API_BASE_URL}/api/payments/create-order`, { courseId });
+    return response;
+  },
+
+  verifyPayment: async (paymentDetails) => {
+    const response = await axios.post(`${API_BASE_URL}/api/payments/verify-payment`, paymentDetails);
+    return response;
+  },
+
+  // _____________
+
 };
 
 export default apiService;
