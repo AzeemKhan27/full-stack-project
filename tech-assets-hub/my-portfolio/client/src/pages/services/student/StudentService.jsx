@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DropdownCard from '../../../components/services/student/DropdownCard.jsx';
 import ServiceCategoryCard from '../../../components/services/student/ServiceCategoryCard.jsx';
-
+import apiService from "../../../services-api/apiService.js"
 const StudentService = () => {
   const navigate = useNavigate();
 
@@ -27,17 +27,19 @@ const StudentService = () => {
     setLoading(true);
     try {
       console.log('Fetching courses for:', title);
-      const response = await axios.get('http://localhost:5000/api/services/students/courses/search', {
-        params: { title },
-      });
+      // const response = await axios.get('http://localhost:5000/api/services/students/courses/search', {
+      //   params: { title },
+      // });
+
+      const response = await apiService.fetchCoursesByTitle(title);
       console.log('Courses fetched:', response.data);
+      
       const courses = response.data.data;
       navigate('/services/student/courses', { state: { courses } });
     } catch (error) {
       console.error('Error fetching courses:', error);
       if (error.response) {
         console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
       } else if (error.request) {
         console.error('No response received:', error.request);
       } else {
