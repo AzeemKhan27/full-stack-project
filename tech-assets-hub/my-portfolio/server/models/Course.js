@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const CourseSchema = new mongoose.Schema({
-  courseId: {type: String},
+  courseId: {type: String, required: true, unique: true},
   title: { type: String, required: true },
   instructor: { type: String, required: true },
   instructor_2: { type: String, default: "" }, // Optional field
