@@ -35,6 +35,28 @@ const createOrder = async (req, res) => {
   }
 };
 
-module.exports = {
-  createOrder,
+const verifyPayment = async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+  try {
+    const attributes = {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    };
+
+    const hmac = crypto.createHmac('sha256', config.razorpayKeySecret);
+    hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
+    const generated_signature = hmac.digest('hex');
+
+    if (generated_signature === razorpay_signature) {
+      res.json({ status: 'Payment Successful' });
+    } else {
+      res.status(400).json({ status: 'Payment Failed' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
+export { createOrder, verifyPayment };
