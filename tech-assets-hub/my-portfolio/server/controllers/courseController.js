@@ -112,9 +112,11 @@ export const searchCoursesByTitle = async (req, res) => {
     }
 
     // Search for courses by title (case-insensitive)
-    const courses = await Course.find({ title: { $regex: title, $options: 'i' } })
-      .select('-__v') // Exclude version key
-      .lean(); // Optimize performance by skipping Mongoose hydration
+    // const courses = await Course.find({ title: { $regex: title, $options: 'i' } })
+    //   .select('-__v') // Exclude version key
+    //   .lean(); // Optimize performance by skipping Mongoose hydration
+
+    const courses = await Course.find({ title: { $regex: title, $options: 'i' } });
 
     res.status(200).json({ success: true, data: courses });
   } catch (error) {

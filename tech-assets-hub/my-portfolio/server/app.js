@@ -20,7 +20,8 @@ const app = express();
 
 // Use CORS middleware
 app.use(cors({
-    origin: 'http://localhost:5173' // Allow requests from this origin
+    origin: 'http://localhost:5173', // Allow requests from this origin
+    credentials: true,
 }));
 
 // Middleware

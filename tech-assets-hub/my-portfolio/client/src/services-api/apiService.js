@@ -71,14 +71,37 @@ const apiService = {
 
 
   // PAYMENT GATEWAY API's
-  createOrder: async (courseId) => {
-    const response = await axios.post(`${API_BASE_URL}/api/payments/create-order`, { courseId });
-    return response;
+  createOrder: async (data) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/payments/create-order`, data);
+      return response;
+    } catch (error) {
+      console.error('Error creating order:', error);
+      // throw error;
+    }
   },
 
   verifyPayment: async (paymentDetails) => {
-    const response = await axios.post(`${API_BASE_URL}/api/payments/verify-payment`, paymentDetails);
-    return response;
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/payments/verify-payment`, paymentDetails);
+      return response;
+    } catch (error) {
+      console.error('Error verifying payment:', error);
+      // throw error;
+    }
+  },
+
+  // Check if the student is already enrolled in the course
+  checkEnrollment: async (email, courseId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/payments/check-enrollment`, {
+        params: { email, courseId },
+      });
+      return response;
+    } catch (error) {
+      console.error('Error checking enrollment:', error);
+      throw error;
+    }
   },
 
   // _____________

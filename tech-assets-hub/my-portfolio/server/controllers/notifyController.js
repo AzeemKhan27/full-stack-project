@@ -1,3 +1,5 @@
+//server/controllers/notifyController.js
+
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -170,3 +172,7 @@ export const sendJoinerNotification = async (req, res) => {
     res.status(500).json({ message: 'Failed to send emails.', error });
   }
 };
+
+
+// Send Payment Cofirmation Notification to Student
+
