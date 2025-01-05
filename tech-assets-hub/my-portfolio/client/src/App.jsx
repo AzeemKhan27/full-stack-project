@@ -17,6 +17,7 @@ import Signup from './components/sections/JoinOurTeam.jsx';
 import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
 import CourseList from './pages/services/student/CourseList.jsx';
 
+import PaymentSuccess from './components/PaymentSuccess.jsx';
 import './index.css';
 
 function App() {
@@ -37,15 +38,17 @@ function App() {
 
           </Route>
 
-          
+
           {/* About Page | Join Team */}
           <Route path="/">  
+          
             {/* Nested routes */}
             <Route path="join-our-team" element={<Signup />} />
           </Route>
 
 
           <Route path="/services/student" element={<StudentService />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/services/student/:serviceType" element={<ServiceDetail />} />
           <Route path="/services/student/courses" element={<CourseList />} />
 

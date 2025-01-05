@@ -23,17 +23,11 @@ const ServiceDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const response = await axios.post(`${BASE_URL_API}/api/services/notifications/student/notify-student`, {
-      //   ...form,
-      //   serviceType: decodedServiceType,
-      // });
 
       const response = await apiService.notifyStudent({
         ...form,
         serviceType: decodedServiceType,
       });
-
-      console.log("RESPONSE: " , response.status); 
 
      
       if (response.status === 200) {
