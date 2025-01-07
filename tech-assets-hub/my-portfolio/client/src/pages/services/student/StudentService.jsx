@@ -27,12 +27,9 @@ const StudentService = () => {
     setLoading(true);
     try {
       console.log('Fetching courses for:', title);
-      // const response = await axios.get('http://localhost:5000/api/services/students/courses/search', {
-      //   params: { title },
-      // });
 
       const response = await apiService.fetchCoursesByTitle(title);
-      console.log('Courses fetched:', response.data);
+      console.log('Courses fetched:', response);
       
       const courses = response.data.data;
       navigate('/services/student/courses', { state: { courses } });
