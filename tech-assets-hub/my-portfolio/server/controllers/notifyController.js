@@ -67,6 +67,8 @@ export const sendStudentNotifications = async (req, res) => {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
+  console.log("BODY -> ",req.body);
+
   try {
     // Admin notification
     await transporter.sendMail({
@@ -87,9 +89,41 @@ export const sendStudentNotifications = async (req, res) => {
     res.status(200).json({ message: 'Notifications sent successfully!' });
   } catch (error) {
     console.error('Email sending error:', error);
-    res.status(500).json({ message: 'Failed to send emails.', error });
+    res.status(500).json({ message: 'Failed to send emails.', error: error.message });
   }
 };
+
+
+// export const sendStudentNotifications = async (req, res) => {
+//   const { name, age, phone, email, message, serviceType } = req.body;
+
+//   if (!name || !age || !phone || !email || !serviceType) {
+//     return res.status(400).json({ message: 'All fields are required.' });
+//   }
+
+//   try {
+//     // Admin notification
+//     await transporter.sendMail({
+//       from: process.env.EMAIL_USER,
+//       to: process.env.ADMIN_EMAIL,
+//       subject: `New Service Request: ${serviceType}`,
+//       text: `Name: ${name}, Age: ${age}, Phone: ${phone}, Email: ${email}, Message: ${message}`,
+//     });
+
+//     // Student notification
+//     await transporter.sendMail({
+//       from: process.env.EMAIL_USER,
+//       to: email,
+//       subject: 'Thank You for Your Request',
+//       text: `Hi ${name},\n\nWe are glad to see you on our portal. We will get in touch, schedule a meeting, and discuss your request soon.\n\nBest regards,\nStudent Services`,
+//     });
+
+//     res.status(200).json({ message: 'Notifications sent successfully!' });
+//   } catch (error) {
+//     console.error('Email sending error:', error);
+//     res.status(500).json({ message: 'Failed to send emails.', error });
+//   }
+// };
 
 
 // Send Joiner Notifications
