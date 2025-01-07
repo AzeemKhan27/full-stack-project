@@ -25,13 +25,14 @@ const apiService = {
       throw error;
     }
   },
+
   notifyStudent: async (data) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/api/services/notifications/student/notify-student`, data);
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error notifying student:', error);
-      throw error;
+      throw error.response?.data || { message: 'Failed to notify student.' };
     }
   },
 

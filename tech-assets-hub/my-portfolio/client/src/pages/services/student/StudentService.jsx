@@ -10,10 +10,12 @@ const StudentService = () => {
   const navigate = useNavigate();
 
   const studentModules = [
-    { title: "Project Help & Guidance", description: "Get guidance on academic projects." },
-    { title: "Assignment Assistance", description: "Help with assignments." },
-    { title: "Skill Development", description: "Upskill with expert training." },
-  ];
+    { title: "IT Project Help & Guidance", description: "Get guidance on academic projects." },
+    { title: "College Assignment Assistance", description: "Help with assignments." },
+    { title: "Book Skill Development Session", description: "Upskill with expert-led training sessions." },
+    { title: "Need Best Tutors Online | Offline", description: "Find tutors for personalized learning, online or offline." },
+    { title: "Book Slot for Interview Practice", description: "Practice interviews with experienced professionals to ace your job interviews." },
+];
 
   const courseCategories = [
     { title: 'IT/CS', items: ['Web Development', 'DevOps', 'SEO/Digital Marketing', 'DSA', 'System Design'] },
@@ -50,6 +52,7 @@ const StudentService = () => {
 
   const onClickHandler = (title) => {
     const formattedTitle = title.replace(/\s+/g, "-").toLowerCase();
+    console.log("formattedTitle = >",formattedTitle)
     navigate(`/services/student/${formattedTitle}`);
   };
 
