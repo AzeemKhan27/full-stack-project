@@ -1,15 +1,14 @@
-
-import "./css/ServiceDetail.css"; // Import the CSS for modal styling
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiService from "../../../services-api/apiService.js";
-import Modal from 'react-modal'; // Import the Modal component
-import { toast, ToastContainer } from 'react-toastify'; // Import toast components
-import 'react-toastify/dist/ReactToastify.css'; // Import toast CSS
+import Modal from 'react-modal';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import "./css/ServiceDetail.css";
 
-// Set the root element for accessibility (required by react-modal)
+// Set the root element for accessibility
 Modal.setAppElement('#root');
 
 const ServiceDetail = () => {
@@ -19,6 +18,8 @@ const ServiceDetail = () => {
   const [loading, setLoading] = useState(false);
   const [validationModalIsOpen, setValidationModalIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [successModalIsOpen, setSuccessModalIsOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState(""); // State to store modal message
 
   const navigate = useNavigate();
 
@@ -46,21 +47,31 @@ const ServiceDetail = () => {
         serviceType: decodedServiceType,
       });
 
+      console.log("Backend response:", response); // Debugging line
+
       if (response.status === 200) {
         toast.success("Form submitted successfully.");
         setForm({ name: "", age: "", phone: "", email: "", message: "" });
+        setSuccessModalIsOpen(true); // Show success modal
+      } else if (response.status === 409) {
+        setModalMessage(response.data.message); // Set the detailed error message
+        setShowModal(true); // Show the modal
       } else {
         toast.error("Failed to submit the form.");
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Something went wrong!';
+      const errorDetails = error.response?.data?.details || ''; // Get detailed error message
+      console.log("Error message:", errorMessage); // Debugging line
 
-      // Show toast for generic error
-      toast.error('Form not submitted. Please check your input.');
-
-      // Show modal if the user has already submitted a request
-      if (errorMessage.includes('already submitted')) {
-        setShowModal(true);
+      // Show modal if the user has already submitted a request for the same serviceType
+      if (errorMessage.toLowerCase().includes('already submitted')) {
+        setModalMessage(errorDetails); // Set the detailed error message
+        setShowModal(true); // Show the modal
+      } else {
+        // Show toast for other errors
+        toast.dismiss(); // Clear any active toasts
+        toast.error('Form not submitted. Please check your input.');
       }
     } finally {
       setLoading(false);
@@ -68,12 +79,12 @@ const ServiceDetail = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate(-1);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <ToastContainer /> {/* Add the ToastContainer component */}
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-4">{decodedServiceType.toUpperCase()}</h1>
       <button
         className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
@@ -164,20 +175,40 @@ const ServiceDetail = () => {
       </Modal>
 
       {/* Modal for showing the message */}
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Request Already Submitted</h2>
-            <p>You have already submitted a request. Our team will contact you shortly. If you haven't received a response within 1-2 days, you can submit again after 24 hours.</p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={showModal}
+        onRequestClose={() => setShowModal(false)}
+        contentLabel="Request Already Submitted"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2 className="text-xl font-bold mb-4">Request Already Submitted</h2>
+        <p>{modalMessage}</p>
+        <button
+          onClick={() => setShowModal(false)}
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
+        >
+          Close
+        </button>
+      </Modal>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={successModalIsOpen}
+        onRequestClose={() => setSuccessModalIsOpen(false)}
+        contentLabel="Form Submitted Successfully"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2 className="text-xl font-bold mb-4">Form Submitted Successfully</h2>
+        <p>Hi {form.name}, we have received your details for <strong>{decodedServiceType}</strong>. Our team will contact you shortly. Please allow us 24 hours to revert. Thank you!</p>
+        <button
+          onClick={() => setSuccessModalIsOpen(false)}
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300"
+        >
+          Close
+        </button>
+      </Modal>
     </div>
   );
 };
