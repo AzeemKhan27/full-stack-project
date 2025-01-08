@@ -62,10 +62,12 @@ export const sendClientNotification = async (req, res) => {
 };
 
 
+/////////////////////////////////////////////////////////////////
+
 export const sendStudentNotifications = async (req, res) => {
   const { name, age, phone, email, message, serviceType } = req.body;
 
-  if (!name || !age || !phone || !email || !serviceType) {
+  if (!name || !age || !phone || !email || !message || !serviceType) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
@@ -74,58 +76,41 @@ export const sendStudentNotifications = async (req, res) => {
 
     // Check if the user has already submitted a request for the same serviceType
     const existingSubmissionSameService = await Submission.findOne({
-      email: email,
       phone: phone,
+      email: email,
       serviceType: serviceType,
     });
 
     if (existingSubmissionSameService) {
-      // If the same serviceType exists, return the response without sending notifications
-      return res.status(409).json({ 
-        message: `Hi ${name}, we have received your details for ${serviceType}. Our team will contact you shortly. Please allow us 24 hours to revert. Thank you!`,
-      });
+      // Calculate the time difference in hours
+      const timeDifference = (currentTime - existingSubmissionSameService.timestamp) / (1000 * 60 * 60);
+
+      // const timeDifference = (currentTime - existingSubmissionSameService.timestamp) / (1000 * 60); // 1 minute logic for TESTING.
+
+      // If the submission was made within the last 24 hours, return the response
+      if (timeDifference < 24) {
+        return res.status(409).json({ 
+          message: "You have already filled your details, please allow us sometime to revert. In case you did not get a revert from our side, you can fill the same details after 24 hours.",
+        });
+      } else {
+        // If more than 24 hours have passed, update the timestamp and allow the submission
+        existingSubmissionSameService.timestamp = currentTime;
+        await existingSubmissionSameService.save();
+      }
     }
 
-    // Check if the user has submitted a request for a different serviceType
-    const existingSubmissionDifferentService = await Submission.findOne({
-      email: email,
-      phone: phone,
-      serviceType: { $ne: serviceType }, // Different serviceType
-    });
+    // Save the new submission
+    await Submission.create({ name, age, phone, email, message, serviceType, timestamp: currentTime });
 
-    if (existingSubmissionDifferentService) {
-      // If a different serviceType exists, save the new submission and send notifications
-      await Submission.create({ email, phone, serviceType, timestamp: currentTime });
-
-      // Send notifications
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: process.env.ADMIN_EMAIL,
-        subject: `New Service Request: ${serviceType}`,
-        text: `Name: ${name}, Age: ${age}, Phone: ${phone}, Email: ${email}, Message: ${message}`,
-      });
-
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Thank You for Your Request',
-        text: `Hi ${name},\n\nWe are glad to see you on our portal. We will get in touch, schedule a meeting, and discuss your request soon.\n\nBest regards,\nStudent Services`,
-      });
-
-      return res.status(200).json({ message: 'Notifications sent successfully!' });
-    }
-
-    // If no submission exists (new phone, email, and serviceType), save the new submission and send notifications
-    await Submission.create({ email, phone, serviceType, timestamp: currentTime });
-
-    // Send notifications
+    // Send notification to admin
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.ADMIN_EMAIL,
       subject: `New Service Request: ${serviceType}`,
-      text: `Name: ${name}, Age: ${age}, Phone: ${phone}, Email: ${email}, Message: ${message}`,
+      text: `Name: ${name}, Age: ${age}, Phone: ${phone}, Email: ${email}, Message: ${message}, ServiceType: ${serviceType}`,
     });
 
+    // Send notification to user
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -133,12 +118,19 @@ export const sendStudentNotifications = async (req, res) => {
       text: `Hi ${name},\n\nWe are glad to see you on our portal. We will get in touch, schedule a meeting, and discuss your request soon.\n\nBest regards,\nStudent Services`,
     });
 
-    res.status(200).json({ message: 'Notifications sent successfully!' });
+    return res.status(200).json({ 
+      message: 'Notifications sent successfully.', 
+      success: true, 
+      data: { 
+        submissionMessage: 'Your details have been submitted successfully!' 
+      } 
+    });
   } catch (error) {
-    console.error('Email sending error:', error);
-    res.status(500).json({ message: 'Failed to send emails.', error });
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Failed to process your request.', error });
   }
 };
+
 
 // Send Joiner Notifications
 
