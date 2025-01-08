@@ -11,11 +11,16 @@ import  {
 
 const router = express.Router();
 
+// const uploadMiddleware = uploadDisk.fields([
+//   { name: 'instructor_image', maxCount: 1 }, 
+//   { name: 'course_banner_image', maxCount: 1 },
+//   { name: 'instructor_image_2', maxCount: 1 },
+// ])
+
 const uploadMiddleware = uploadDisk.fields([
-  { name: 'instructor_image', maxCount: 1 }, 
-  { name: 'course_banner_image', maxCount: 1 },
-  { name: 'instructor_image_2', maxCount: 1 },
-])
+  { name: 'course_banner_image', maxCount: 1 }, // Course banner image
+  { name: 'instructor_images', maxCount: 10 }, // Allow up to 10 instructor images
+]);
 
 router.post('/', 
   uploadMiddleware, createCourse); // Create a new course
