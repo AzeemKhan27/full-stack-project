@@ -1,6 +1,25 @@
-node_modules
-build
-.git
-.gitignore
-Dockerfile
-docker-compose.yml
+# node_modules/
+# build
+# .git
+# .gitignore
+# .Dockerfile
+# .docker-compose.yml
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build directory
+build/
+
+# Ignore .env file (if it exists)
+.env
+
+# Ignore other common files and directories
+.DS_Store
+*.log
+*.tmp
+*.cache
+dist/
+.cache/
+.idea/
+.vscode/

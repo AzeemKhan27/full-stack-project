@@ -1,3 +1,20 @@
+# Ignore .env file
+.env
+
+
+# Ignore public folder
+public/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore other files or directories if needed
+# Example:
+# .DS_Store
+# *.log
+
+
+
 # Logs
 logs
 *.log
