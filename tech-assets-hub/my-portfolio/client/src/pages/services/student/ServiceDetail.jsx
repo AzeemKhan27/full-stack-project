@@ -36,7 +36,9 @@ const ServiceDetail = () => {
     setLoading(true);
 
     if (!form.name || !form.age || !form.phone || !form.email || !form.message) {
+      setModalMessage("All fields are required. Please fill the form properly.");
       setValidationModalIsOpen(true);
+      toast.error("Something is wrong. Please fill all fields.");
       setLoading(false);
       return;
     }
@@ -54,22 +56,20 @@ const ServiceDetail = () => {
         setForm({ name: "", age: "", phone: "", email: "", message: "" });
         setSuccessModalIsOpen(true); // Show success modal
       } else if (response.status === 409) {
-        setModalMessage(response.data.message); // Set the detailed error message
+        setModalMessage("You have already filled your details, please allow us sometime to revert. In case you did not get a revert from our side, you can fill the same details after 24 hours."); // Set the detailed error message
         setShowModal(true); // Show the modal
+        toast.error("Something went wrong!");
       } else {
         toast.error("Failed to submit the form.");
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Something went wrong!';
-      const errorDetails = error.response?.data?.details || ''; // Get detailed error message
-      console.log("Error message:", errorMessage); // Debugging line
-
-      // Show modal if the user has already submitted a request for the same serviceType
-      if (errorMessage.toLowerCase().includes('already submitted')) {
-        setModalMessage(errorDetails); // Set the detailed error message
+      if (error.status === 409) {
+        setModalMessage("You have already filled your details, please allow us sometime to revert. In case you did not get a revert from our side, you can fill the same details after 24 hours."); // Set the detailed error message
         setShowModal(true); // Show the modal
+        toast.error("Something went wrong!");
       } else {
-        // Show toast for other errors
+        const errorMessage = error.data?.message || 'Something went wrong!';
+        console.log("Error message:", errorMessage); // Debugging line
         toast.dismiss(); // Clear any active toasts
         toast.error('Form not submitted. Please check your input.');
       }
@@ -165,7 +165,7 @@ const ServiceDetail = () => {
         overlayClassName="overlay"
       >
         <h2 className="text-xl font-bold mb-4">Validation Error</h2>
-        <p className="mb-4">All fields are required.</p>
+        <p className="mb-4">{modalMessage}</p>
         <button
           onClick={() => setValidationModalIsOpen(false)}
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
