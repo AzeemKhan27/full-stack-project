@@ -24,6 +24,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
+      
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -55,7 +56,8 @@ function App() {
           
         </Routes>
         <Footer />
-
+        
+      
       </Router>
     </Provider>
   );

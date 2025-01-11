@@ -2,16 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* frontend/src/index.css */
+/* client/src/index.css */
 /* Payment Page Css */
 
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+  } */
+
+  /* body {
+    background: linear-gradient(135deg, #f4f4f4 25%, #e0e0e0 25%, #e0e0e0 50%, #f4f4f4 50%, #f4f4f4 75%, #e0e0e0 75%, #e0e0e0);
+    background-size: 150% 150%;
+    animation: background-animation;
+} */
+
+/* body {
+  background: linear-gradient(135deg, #f4f4f4 25%, #e0e0e0 25%, #e0e0e0 50%, #f4f4f4 50%, #f4f4f4 75%, #e0e0e0 75%, #e0e0e0);
+  background-size: 150% 150%;
+  animation: background-animation; 
+} */
+
+/* ------------- START - Background Screen ------------------ */
+/* body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(206, 72, 72, 0.8) 20%, rgba(233, 39, 39, 0.8) 30%, rgba(247, 247, 248, 0.8) 40%, rgba(147, 138, 216, 0.8) 50%, rgba(195, 186, 220, 0.8) 75%, rgba(167, 163, 219, 0.8) 75%, rgba(205, 95, 95, 0.8));
+  background-size: 150% 150%;
+  animation: gradient-animation 10s ease infinite; 
+} */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(255, 183, 183, 0.8) 26%, rgba(154, 110, 237, 0.8) 30%, rgba(247, 247, 248, 0.8) 40%, rgba(147, 138, 216, 0.8) 50%, rgba(195, 186, 220, 0.8) 75%, rgba(190, 186, 248, 0.8) 75%, rgba(205, 95, 95, 0.8));
+  background-size: 150% 150%;
+  animation: gradient-animation 10s ease infinite; 
+}
+
+/* Define the keyframes for the gradient animation */
+@keyframes gradient-animation {
+  0% {
+      background-position: 0% 50%;
   }
-  
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+  /* ------------- END - Background Screen ------------------ */
+
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -109,3 +155,55 @@ body {
     background-color: #0056b3;
   }
   
+
+  /* =================== Slider CSS ===========================  */
+
+  /* Gradient Background Animation */
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease infinite;
+}
+
+/* Slide-in Animation for Images */
+@keyframes slide-in {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+
+/* Fade-out Animation for Images */
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Text Slide-in Animation */
+@keyframes text-slide-in {
+  0% { opacity: 0; transform: translateY(50px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-text-slide-in {
+  animation: text-slide-in 1s ease-in-out forwards;
+}
+
+/* Glow Effect for Text */
+@keyframes glow {
+  0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.9); }
+  100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+}
+
+/* Button Hover Effect */
+.button-glow {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.button-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
