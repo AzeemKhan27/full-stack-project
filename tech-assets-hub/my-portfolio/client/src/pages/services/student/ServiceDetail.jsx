@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import "./css/ServiceDetail.css";
+import BackButton from '../../../components/BackButton.jsx';
 
 // Set the root element for accessibility
 Modal.setAppElement('#root');
@@ -78,29 +79,32 @@ const ServiceDetail = () => {
     }
   };
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ToastContainer />
       <h1 className="text-2xl font-bold mb-4">{decodedServiceType.toUpperCase()}</h1>
-      <button
-        className="bg-gray-500 text-white px-4 py-2 rounded mb-4"
-        onClick={handleBack}
-      >
-        Back
-      </button>
-      <form className="bg-gray-100 p-4 rounded shadow-md" onSubmit={handleSubmit}>
+      
+      {/* Back Button using BackButton component */}
+      <div className="mb-4">
+        <BackButton
+          text="Back"
+          textColor="text-white"
+          bgColor="bg-gray-500"
+          hoverBgColor="bg-gray-600"
+          onClick={() => navigate(-1)} // Navigate back on click
+        />
+      </div>
+
+      <form className="bg-gray-100 p-4 sm:p-6 rounded shadow-md" onSubmit={handleSubmit}>
+      {/* <form className="p-6 bg-gray-100 shadow-lg rounded-lg max-w-3xl mx-auto m-12" onSubmit={handleSubmit}> */}
         <div className="mb-4">
-          <label className="block text-gray-700">Student Name</label>
+          <label className="block text-gray-700"> Student Name</label>
           <input
             type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -111,7 +115,7 @@ const ServiceDetail = () => {
             name="age"
             value={form.age}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -126,8 +130,8 @@ const ServiceDetail = () => {
               required: true,
               autoFocus: true
             }}
-            containerClass="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            inputClass="w-full"
+            containerClass="w-full"
+            inputClass="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
@@ -137,7 +141,7 @@ const ServiceDetail = () => {
             name="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -147,11 +151,15 @@ const ServiceDetail = () => {
             name="message"
             value={form.message}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" type="submit" disabled={loading}>
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+          type="submit"
+          disabled={loading}
+        >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
       </form>
@@ -161,14 +169,14 @@ const ServiceDetail = () => {
         isOpen={validationModalIsOpen}
         onRequestClose={() => setValidationModalIsOpen(false)}
         contentLabel="Validation Error"
-        className="modal"
-        overlayClassName="overlay"
+        className="modal sm:w-3/4 md:w-1/2 lg:w-1/3 mx-auto p-4 bg-white rounded-lg shadow-lg"
+        overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-xl font-bold mb-4">Validation Error</h2>
         <p className="mb-4">{modalMessage}</p>
         <button
           onClick={() => setValidationModalIsOpen(false)}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
         >
           Close
         </button>
@@ -179,8 +187,8 @@ const ServiceDetail = () => {
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel="Request Already Submitted"
-        className="modal"
-        overlayClassName="overlay"
+        className="modal sm:w-3/4 md:w-1/2 lg:w-1/3 mx-auto p-4 bg-white rounded-lg shadow-lg"
+        overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-xl font-bold mb-4">Request Already Submitted</h2>
         <p>{modalMessage}</p>
@@ -197,8 +205,8 @@ const ServiceDetail = () => {
         isOpen={successModalIsOpen}
         onRequestClose={() => setSuccessModalIsOpen(false)}
         contentLabel="Form Submitted Successfully"
-        className="modal"
-        overlayClassName="overlay"
+        className="modal sm:w-3/4 md:w-1/2 lg:w-1/3 mx-auto p-4 bg-white rounded-lg shadow-lg"
+        overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-xl font-bold mb-4">Form Submitted Successfully</h2>
         <p>Hi {form.name}, we have received your details for <strong>{decodedServiceType}</strong>. Our team will contact you shortly. Please allow us 24 hours to revert. Thank you!</p>

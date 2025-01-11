@@ -21,13 +21,15 @@ import React from 'react';
 
 const OurStory = () => {
   return (
-    <section className="py-16 bg-white">
+    // <section className="py-16 bg-white">
+    <section className="py-16">
       <div className="container mx-auto text-center">
       
       
       <div className="bg-white p-8 rounded-lg shadow-lg mx-auto mb-8">
       {/* <h2 className="text-3xl font-bold mb-6">Our Story</h2> */}
-      <h2 className="text-4xl font-extrabolds text-gray-800 mb-8">Our Story</h2> 
+      {/* <h2 className="text-4xl font-extrabolds text-gray-800 mb-8">Our Story</h2>  */}
+      <h2 className="text-4xl font-extrabold text-gray-800 mb-8">Our Story</h2> 
       
         <p className="text-lg text-gray-700">
           At "Tech Assets Hub", we began our journey with a vision to empower freelancers and businesses alike. 

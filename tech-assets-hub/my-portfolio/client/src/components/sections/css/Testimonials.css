@@ -1,73 +1,7 @@
-/* src/components/css/Testimonials.css */
+ /* src/components/sections/css/Testimonials.css */
 
-/* .swiper-pagination-bullets .swiper-pagination-bullet {
-  width: 16px !important;
-  height: 4px !important;
-  border-radius: 5px !important;
-  margin: 0 6px !important;
-}
-
-.swiper-pagination {
-  bottom: 2px !important;
-}
-
-.swiper-wrapper {
-  height: max-content !important;
-  width: max-content !important;
-  padding-bottom: 64px;
-}
-
-.swiper-pagination-bullet-active {
-  background: #4F46E5 !important;
-}
-
-.swiper-slide.swiper-slide-active > .slide_active\:border-indigo-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(79 70 229 / var(--tw-border-opacity));
-}
-
-.swiper-slide.swiper-slide-active > .group .slide_active\:text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
-} */
-
-/* 2 */
-
-/* .swiper-pagination-bullets .swiper-pagination-bullet {
-  width: 16px !important;
-  height: 4px !important;
-  border-radius: 5px !important;
-  margin: 0 6px !important;
-}
-
-.swiper-pagination {
-  bottom: 2px !important;
-}
-
-.swiper-wrapper {
-  height: max-content !important;
-  width: max-content !important;
-  padding-bottom: 64px;
-}
-
-.swiper-pagination-bullet-active {
-  background: #4F46E5 !important;
-}
-
-.swiper-slide.swiper-slide-active > .slide_active\:border-indigo-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(79 70 229 / var(--tw-border-opacity));
-}
-
-.swiper-slide.swiper-slide-active > .group .slide_active\:text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
-} */
-
-
-/* 3 */
-
-/* TestimonialSlider.css */
+  /* CallToAction.css */
+/* CallToAction.css */
 .slider {
   position: relative;
   overflow: hidden;
@@ -79,6 +13,20 @@
 }
 
 .slide {
-  min-width: 33.33%; /* Adjust this for 2 or 3 cards */
+  min-width: 100%; /* Default to 1 slide for mobile */
   box-sizing: border-box;
+  padding: 0 10px; /* Add some spacing between slides */
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .slide {
+    min-width: 50%; /* Show 2 slides on tablets */
+  }
+}
+
+@media (min-width: 1024px) {
+  .slide {
+    min-width: 33.33%; /* Show 3 slides on desktops */
+  }
 }

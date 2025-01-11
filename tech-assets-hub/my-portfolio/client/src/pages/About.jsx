@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Typewriter from "../components/ui/Typewriter/TypeWriter";
 import OurStory from "../components/sections/AboutPage/OurStory.jsx";
 import OurValues from "../components/sections/AboutPage/OurValues.jsx";
-// import CallToAction from "../components/sections/AboutPage/CallToAction.jsx";
+import CallToAction from "../components/sections/AboutPage/CallToAction.jsx";
 import Achievements from "../components/sections/AboutPage/Achievements.jsx";
 import MeetTheTeam from "../components/sections/AboutPage/MeetTheTeam.jsx";
 import ContactInformation from "../components/sections/AboutPage/ContactInformation.jsx";
@@ -105,7 +105,7 @@ const About = () => {
 
       {/* CallToAction */}
 
-      {/* <CallToAction /> */}
+      <CallToAction />
 
       {/* ContactInformation   */}
 

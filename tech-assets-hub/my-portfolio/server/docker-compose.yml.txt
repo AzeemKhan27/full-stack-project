@@ -1,0 +1,14 @@
+EmailJS_PUB_KEY = "xyz";
+EmailJS_PRI_KEY = "xyz";
+EmailJS_TEMPLATE_ID = "xyz";
+
+VITE_BASE_URL_API = "https://tech-assets-hub-backend.onrender.com"
+
+Local_VITE_BASE_URL_API = "http://localhost:5000"
+
+
+//Payment Gateway Razor Pay 
+RAZORPAY_KEY = ""xyz";"
+RAZORPAY_SECRET = ""xyz";"
+
+VITE_RAZORPAY_KEY= "xyz";

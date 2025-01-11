@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+
+import "./ClientService.css";
+
+import React, { useState, useEffect, useRef } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import apiService from '../../../services-api/apiService.js';
@@ -15,6 +18,8 @@ const ClientModule = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false); // State for form visibility
+  const formRef = useRef(null); // Ref for the form section
 
   const options = [
     {
@@ -51,6 +56,12 @@ const ClientModule = () => {
     setSelectedOption(option);
     setFormSubmitted(false);
     setFormData({ clientName: '', phoneNumber: '', email: '', message: '' });
+    setIsFormVisible(true); // Show the form with animation
+
+    // Smoothly scroll to the form section
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   const handleInputChange = (e) => {
@@ -118,23 +129,23 @@ const ClientModule = () => {
           }}
         >
           <div className="max-w-3xl mx-auto text-center bg-blue bg-opacity-50 p-6 rounded-md">
-            {/* <h2 className="text-4xl font-bold mb-4">{selectedOption.name}</h2> */}
             <h1 className="text-3xl">{selectedOption.description}</h1>
-            {/* <img src="" alt="qqq" /> */}
-            
           </div>
-         
         </div>
       )}
 
       {/* Form Section */}
       {selectedOption && (
-        <div className="p-6 bg-blue-100 shadow-lg rounded-lg max-w-3xl mx-auto">
-         
+        <div
+          ref={formRef} // Ref for scrolling
+          id="service-form" // ID for the form section
+          className={`mb-12 form-container p-6 bg-gray-100 shadow-lg rounded-lg max-w-3xl mx-auto ${
+            isFormVisible ? 'visible' : ''
+          }`}
+        >
           <h3 className="text-2xl font-semibold mb-4 text-center">
             {selectedOption.name} Form
           </h3>
-          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block font-medium mb-1">Client Name</label>
@@ -182,9 +193,9 @@ const ClientModule = () => {
               />
             </div>
             <button
-                type="submit"
-                className="bg-gradient-to-r from-blue-800 to-blue-400 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-800 transition duration-300 w-full"
-                disabled={isLoading}
+              type="submit"
+              className="bg-gradient-to-r from-blue-800 to-blue-400 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-800 transition duration-300 w-full"
+              disabled={isLoading}
             >
               {isLoading ? 'Submitting...' : 'Submit'}
             </button>
