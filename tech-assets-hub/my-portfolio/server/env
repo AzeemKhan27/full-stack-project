@@ -1,0 +1,17 @@
+PORT=5000
+# MONGODB_URI="mongodb://localhost:27017/myportfolio"
+
+MONGODB_URI= "mongodb+srv://abcd_123:Abcd1234@tech-hub-db.czzyd.mongodb.net"
+DB_NAME = "tech-assets-hub"
+EMAIL_USER = "techassetshub@gmail.com"
+EMAIL_PASS = "xpxuhmmjsqevppmb"
+ADMIN_EMAIL = "techassetshub@gmail.com"
+
+CLOUDINARY_CLOUD_NAME = "dz8wmsnar"
+CLOUDINARY_API_KEY = "912428651411586"
+CLOUDINARY_API_SECRET = "SqDs5i7gXHap2Psqvc0b61Yhl34"
+
+
+//Payment Gateway Razor Pay 
+RAZORPAY_KEY = "rzp_test_YDhZhMf3dUdIHG"
+RAZORPAY_SECRET = "DD4crQwLUs2wtyH8lGOeN9BY"
