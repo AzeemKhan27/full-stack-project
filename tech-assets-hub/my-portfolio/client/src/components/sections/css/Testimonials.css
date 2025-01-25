@@ -1,7 +1,7 @@
  /* src/components/sections/css/Testimonials.css */
 
-  /* CallToAction.css */
-/* CallToAction.css */
+  /* src/components/sections/css/Testimonials.css */
+
 .slider {
   position: relative;
   overflow: hidden;
@@ -16,17 +16,20 @@
   min-width: 100%; /* Default to 1 slide for mobile */
   box-sizing: border-box;
   padding: 0 10px; /* Add some spacing between slides */
+  margin: 0 10px; /* Add gap between cards */
 }
 
 /* Responsive adjustments */
 @media (min-width: 640px) {
   .slide {
-    min-width: 50%; /* Show 2 slides on tablets */
+    min-width: calc(50% - 20px); /* Show 2 slides on tablets, accounting for margin */
+    margin: 0 10px; /* Add gap between cards */
   }
 }
 
 @media (min-width: 1024px) {
   .slide {
-    min-width: 33.33%; /* Show 3 slides on desktops */
+    min-width: calc(33.33% - 20px); /* Show 3 slides on desktops, accounting for margin */
+    margin: 0 10px; /* Add gap between cards */
   }
 }
