@@ -14,7 +14,9 @@ import Signup from './components/sections/JoinOurTeam.jsx';
 import ServiceDetail from './pages/services/student/ServiceDetail.jsx';
 import CourseList from './pages/services/student/CourseList.jsx';
 import PaymentSuccess from './components/PaymentSuccess.jsx';
-import EnglishPractice from './pages/services/student/EnglishPractice.jsx'; // Import EnglishPractice component
+import EnglishPractice from './pages/services/student/EnglishPractice.jsx'; 
+import PrivacyPolicy from './pages/PrivacyPolicy'; // Import PrivacyPolicy component
+import TermsOfService from './pages/TermsOfService'; // Import TermsOfService component
 import './index.css';
 
 function App() {
