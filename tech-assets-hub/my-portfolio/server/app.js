@@ -10,6 +10,8 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import notifyRoutes from './routes/notifyRoutes.js';
 import teamRoutes from './routes/teamRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
+import instructorRoutes from './routes/instructorRoutes.js'; 
+import registerForEnglishPractice from './routes/englishPracticeRoutes.js';
 import multer from 'multer';
 
 // Load environment variables
@@ -42,6 +44,8 @@ app.use('/api/services/notifications', upload.none(), notifyRoutes);
 app.use('/api/services/students/courses', courseRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/english-instructors', instructorRoutes); // Use instructor routes
+app.use('/api/register-for-english-practice', registerForEnglishPractice); // Use instructor routes
 
 // Error handling middleware
 app.use((err, req, res, next) => {

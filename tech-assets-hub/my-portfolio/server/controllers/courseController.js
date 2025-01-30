@@ -5,6 +5,9 @@ import Course from '../models/Course.js';
 
 import { nanoid } from 'nanoid';
 
+
+
+
 export const createCourse = async (req, res) => {
   try {
     console.log('Request Body:', req.body); // Log the request body
@@ -112,8 +115,6 @@ export const createCourse = async (req, res) => {
     res.status(500).json({ success: false, message: error.message }); // Return the actual error message
   }
 };
-
-
 // Search courses by title
 export const searchCoursesByTitle = async (req, res) => {
   try {

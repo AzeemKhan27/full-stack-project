@@ -1,5 +1,5 @@
 // server/controllers/contactController.js
-import { sendEmail } from '../services/emailService.js';
+import sendContactEmails  from '../services/emailService.js';
 import contactService from '../services/contactService.js';
 import validator from 'validator';
 
@@ -8,6 +8,7 @@ const contactController = {
   async createContact(req, res) {
     try {
       const { name, phoneNumber, email, message } = req.body;
+      console.log("BODY > ",req.body);
 
       // Input validation
       if (!name || !email || !message) {
@@ -28,8 +29,10 @@ const contactController = {
       // Create a new contact
       const newContact = await contactService.createContact({ name, phoneNumber, email, message });
 
+      console.log("newContact =>",newContact);
+
       // Send email after creating the contact
-      const emailSent = await sendEmail(newContact);
+      const emailSent = await sendContactEmails(newContact);
 
       if (emailSent) {
         return res.status(201).json({ message: 'Contact created and email sent successfully!', contact: newContact });
