@@ -1,3 +1,4 @@
+// client/src/pages/services/student/ServiceDetail.jsx
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiService from "../../../services-api/apiService.js";
@@ -72,7 +73,7 @@ const ServiceDetail = () => {
         const errorMessage = error.data?.message || 'Something went wrong!';
         console.log("Error message:", errorMessage); // Debugging line
         toast.dismiss(); // Clear any active toasts
-        toast.error('Form not submitted. Please check your input.');
+        toast.error('Form not submitted. Please check your input!');
       }
     } finally {
       setLoading(false);
