@@ -5,6 +5,7 @@ const studentSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true }, // Ensure email is unique
   phoneNo: { type: String, required: true },
   city: { type: String, required: true },
+  country : { type: String, required: true},
   enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }], // Array of course IDs
   createdAt: { type: Date, default: Date.now },
 });

@@ -1,14 +1,22 @@
-EmailJS_PUB_KEY = "xyz";
-EmailJS_PRI_KEY = "xyz";
-EmailJS_TEMPLATE_ID = "xyz";
+PORT=5000
+# MONGODB_URI="mongodb://localhost:27017/myportfolio"
 
-VITE_BASE_URL_API = "https://tech-assets-hub-backend.onrender.com"
+MONGODB_URI= "mongodb+srv://abcd_123:Abcd1234@tech-hub-db.czzyd.mongodb.net"
+DB_NAME = "tech-assets-hub"
+EMAIL_USER = "techassetshub@gmail.com"
+EMAIL_PASS = "xpxuhmmjsqevppmb"
+ADMIN_EMAIL = "techassetshub@gmail.com"
 
-Local_VITE_BASE_URL_API = "http://localhost:5000"
+CLOUDINARY_CLOUD_NAME = "dz8wmsnar"
+CLOUDINARY_API_KEY = "912428651411586"
+CLOUDINARY_API_SECRET = "SqDs5i7gXHap2Psqvc0b61Yhl34"
+
+JWT_SECRET = "jsonwebtoken_secret_key123"
 
 
 //Payment Gateway Razor Pay 
-RAZORPAY_KEY = ""xyz";"
-RAZORPAY_SECRET = ""xyz";"
+RAZORPAY_KEY = "rzp_test_YDhZhMf3dUdIHG"
+RAZORPAY_SECRET = "DD4crQwLUs2wtyH8lGOeN9BY"
 
-VITE_RAZORPAY_KEY= "xyz";
+Haritha Balaji
+Pavithra Karthikeyan

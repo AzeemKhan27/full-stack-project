@@ -214,4 +214,68 @@ export const sendJoinerNotification = async (req, res) => {
   }
 };
 
+///////////////////// Send English Instructor //////////////////////
+
+// New function to send notifications for English Practice
+export const sendEnglishPracticeNotification = async (req, res) => {
+  const { name, email, phone, message, instructorEmail } = req.body;
+
+  if (!name || !email || !phone || !message || !instructorEmail) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'English Practice Request',
+      html: `
+        <h2>Dear ${name},</h2>
+        <p>Thank you for reaching out to us for English Practice.</p>
+        <p>We will get back to you shortly!</p>
+        <p>Best regards,<br>Team Tech Assets Hub.</p>
+      `,
+    };
+
+    const adminMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL,
+      subject: 'New English Practice Request',
+      html: `
+        <h2>Hi Admin,</h2>
+        <p><strong>${name}</strong> has reached out for English Practice. Here's the shared information:</p>
+        <ul>
+          <li><strong>Phone Number:</strong> ${phone}</li>
+          <li><strong>Message:</strong> ${message}</li>
+          <li><strong>Instructor Email:</strong> ${instructorEmail}</li>
+        </ul>
+        <p>Best regards,<br>Team Tech Assets Hub.</p>
+      `,
+    };
+
+    const instructorMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: instructorEmail,
+      subject: 'New English Practice Request',
+      html: `
+        <h2>Hi Instructor,</h2>
+        <p><strong>${name}</strong> has reached out for English Practice. Here's the shared information:</p>
+        <ul>
+          <li><strong>Phone Number:</strong> ${phone}</li>
+          <li><strong>Message:</strong> ${message}</li>
+        </ul>
+        <p>Best regards,<br>Team Tech Assets Hub.</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    await transporter.sendMail(adminMailOptions);
+    await transporter.sendMail(instructorMailOptions);
+
+    res.status(200).json({ message: 'Notifications sent successfully!' });
+  } catch (error) {
+    console.error('Email sending error:', error);
+    res.status(500).json({ message: 'Failed to send emails.', error });
+  }
+};
 
