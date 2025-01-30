@@ -1,55 +1,60 @@
-// // client/src/components/Payment.jsx
 
-// import "./Payment.css"
-// import React, { useState } from 'react';
+
+// client/src/components/Payment.jsx
+
+// import React, { useState, useEffect } from 'react';
 // import apiService from '../services-api/apiService.js';
-// import Modal from 'react-modal'; // Import the Modal component
+// import Modal from 'react-modal';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import { useLocation } from 'react-router-dom';
 
 // // Set the root element for accessibility (required by react-modal)
 // Modal.setAppElement('#root');
 
-// const Payment = ({ course }) => {
+// const Payment = () => {
 //   const [name, setName] = useState('');
 //   const [email, setEmail] = useState('');
 //   const [phoneNo, setPhoneNo] = useState('');
 //   const [city, setCity] = useState('');
-//   const [isEnrolled, setIsEnrolled] = useState(false); // Track enrollment status
-//   const [enrollmentModalIsOpen, setEnrollmentModalIsOpen] = useState(false); // Modal for already enrolled
-//   const [validationModalIsOpen, setValidationModalIsOpen] = useState(false); // Modal for missing fields
+//   const [isEnrolled, setIsEnrolled] = useState(false);
+//   const [enrollmentModalIsOpen, setEnrollmentModalIsOpen] = useState(false);
+//   const [validationModalIsOpen, setValidationModalIsOpen] = useState(false);
+//   const location = useLocation();
+//   const { registrationId, instructor } = location.state || {};
 
 //   const handleRazorpayPayment = async () => {
-//     // Check if any field is missing
 //     if (!name || !email || !phoneNo || !city) {
-//       setValidationModalIsOpen(true); // Open the validation modal
-//       return; // Stop the payment flow
+//       setValidationModalIsOpen(true);
+//       toast.error('Please fill all fields.');
+//       return;
 //     }
 
 //     try {
-//       // Check if the student is already enrolled in the course
 //       const enrollmentResponse = await apiService.checkEnrollment(email, course._id);
 //       if (enrollmentResponse.data.isEnrolled) {
-//         setIsEnrolled(true); // Set enrollment status to true
-//         setEnrollmentModalIsOpen(true); // Open the enrollment modal
-//         return; // Stop the payment flow
+//         setIsEnrolled(true);
+//         setEnrollmentModalIsOpen(true);
+//         return;
 //       }
 
-//       // Create order with student details
 //       const response = await apiService.createOrder({
 //         courseId: course._id,
 //         name,
 //         email,
 //         phoneNo,
 //         city,
+//         paymentType: 'english-practice',
+//         registrationId,
 //       });
 //       const order = response.data;
 
-//       // Razorpay options
 //       const options = {
 //         key: import.meta.env.VITE_RAZORPAY_KEY,
-//         amount: course.price * 100, // Convert to paise
+//         amount: 500 * 100, // Amount in paise
 //         currency: 'INR',
-//         name: course.title,
-//         description: course.description,
+//         name: 'English Practice',
+//         description: 'English Practice Session',
 //         order_id: order.id,
 //         handler: async (response) => {
 //           const paymentDetails = {
@@ -57,14 +62,13 @@
 //             razorpay_payment_id: response.razorpay_payment_id,
 //             razorpay_signature: response.razorpay_signature,
 //             studentId: order.studentId,
-//             courseId: course._id,
+//             courseId: null,
+//             paymentType: 'english-practice',
+//             registrationId,
 //           };
 
-//           // Verify payment and save details
 //           const verificationResponse = await apiService.verifyPayment(paymentDetails);
-//           alert(verificationResponse.data.status);
-
-//           // Redirect or show success message
+//           toast.success(verificationResponse.data.status);
 //           window.location.href = '/payment-success';
 //         },
 //         prefill: {
@@ -80,69 +84,47 @@
 //         },
 //       };
 
-//       // Open Razorpay payment modal
 //       const paymentObject = new window.Razorpay(options);
 //       paymentObject.open();
 //     } catch (error) {
 //       console.error('Error creating order:', error);
-//       alert('Failed to initiate payment. Please try again.');
+//       toast.error('Failed to initiate payment. Please try again.');
 //     }
 //   };
 
+//   useEffect(() => {
+//     if (registrationId && instructor) {
+//       setName(instructor.fullName);
+//       setEmail(instructor.email);
+//       setPhoneNo(instructor.phone);
+//       setCity(instructor.city);
+//     }
+//   }, [registrationId, instructor]);
+
 //   return (
 //     <div className="mt-4">
-//       <div className="space-y-4">
-//         <input
-//           type="text"
-//           placeholder="Full Name"
-//           value={name}
-//           onChange={(e) => setName(e.target.value)}
-//           className="w-full p-2 border border-gray-300 rounded"
-//         />
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           className="w-full p-2 border border-gray-300 rounded"
-//         />
-//         <input
-//           type="tel"
-//           placeholder="Phone Number"
-//           value={phoneNo}
-//           onChange={(e) => setPhoneNo(e.target.value)}
-//           className="w-full p-2 border border-gray-300 rounded"
-//         />
-//         <input
-//           type="text"
-//           placeholder="City"
-//           value={city}
-//           onChange={(e) => setCity(e.target.value)}
-//           className="w-full p-2 border border-gray-300 rounded"
-//         />
-//       </div>
 //       <button
 //         onClick={handleRazorpayPayment}
-//         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full"
+//         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 transition duration-300"
 //       >
-//         Invest in Yourself
+//         Book English Practice Session
 //       </button>
 
 //       {/* Modal for already enrolled students */}
 //       <Modal
-//         isOpen={enrollmentModalIsOpen} // Control modal visibility
-//         onRequestClose={() => setEnrollmentModalIsOpen(false)} // Close modal when clicking outside or pressing ESC
+//         isOpen={enrollmentModalIsOpen}
+//         onRequestClose={() => setEnrollmentModalIsOpen(false)}
 //         contentLabel="Already Enrolled"
-//         className="modal"
-//         overlayClassName="overlay"
+//         className="modal sm:w-3/4 md:w-1/2 lg:w-1/3 mx-auto p-4 bg-white rounded-lg shadow-lg"
+//         overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
 //       >
 //         <h2 className="text-xl font-bold mb-4">Already Enrolled</h2>
 //         <p className="mb-4">
 //           You have already enrolled in this course. Please choose another course.
 //         </p>
 //         <button
-//           onClick={() => setEnrollmentModalIsOpen(false)} // Close the modal
-//           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+//           onClick={() => setEnrollmentModalIsOpen(false)}
+//           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 //         >
 //           Close
 //         </button>
@@ -150,19 +132,19 @@
 
 //       {/* Modal for missing fields */}
 //       <Modal
-//         isOpen={validationModalIsOpen} // Control modal visibility
-//         onRequestClose={() => setValidationModalIsOpen(false)} // Close modal when clicking outside or pressing ESC
+//         isOpen={validationModalIsOpen}
+//         onRequestClose={() => setValidationModalIsOpen(false)}
 //         contentLabel="Missing Fields"
-//         className="modal"
-//         overlayClassName="overlay"
+//         className="modal sm:w-3/4 md:w-1/2 lg:w-1/3 mx-auto p-4 bg-white rounded-lg shadow-lg"
+//         overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
 //       >
 //         <h2 className="text-xl font-bold mb-4">Missing Fields</h2>
 //         <p className="mb-4">
 //           Please fill in all fields (Name, Email, Phone Number, City) to proceed.
 //         </p>
 //         <button
-//           onClick={() => setValidationModalIsOpen(false)} // Close the modal
-//           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+//           onClick={() => setValidationModalIsOpen(false)}
+//           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 //         >
 //           Close
 //         </button>
@@ -172,6 +154,11 @@
 // };
 
 // export default Payment;
+
+
+
+
+// :::::::::::::::::::::::::::::::::::::::::::::::
 
 
 import React, { useState } from 'react';
@@ -340,3 +327,5 @@ const Payment = ({ course }) => {
 };
 
 export default Payment;
+
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::
