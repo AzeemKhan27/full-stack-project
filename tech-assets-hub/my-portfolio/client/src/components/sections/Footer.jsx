@@ -1,7 +1,7 @@
 
-
 import React from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaX } from 'react-icons/fa6'; // Updated import for X icon
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container mx-auto px-5 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* About Section */}
         <div>
-          <h2 className="text-lg font-semibold">Tech Assets Hub</h2>
+          <a href="/about"><h2 className="text-lg font-semibold">Tech Assets Hub</h2></a>
           <p className="text-sm mt-2">
             Your one-stop solution for all tech assets. We provide the latest news, reviews, and insights into the tech world.
           </p>
@@ -36,7 +36,7 @@ const Footer = () => {
               <a href="/services/client" className="text-gray-100 hover:text-purple-400 transition duration-300">Client Services</a>
             </li>
             <li>
-              <a href="/terms" className="text-gray-100 hover:text-purple-400 transition duration-300">Terms of Service</a>
+              <a href="/terms-of-service" className="text-gray-100 hover:text-purple-400 transition duration-300">Terms of Service</a>
             </li>
           </ul>
         </div>
@@ -55,16 +55,16 @@ const Footer = () => {
               <FaFacebook size={24} /> Facebook
             </a>
             <a
-              href="https://twitter.com"
+              href="https://x.com/tech_Assets_Hub?t=nX2uTdExyqqmsbF2UikQCw&s=08"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-100 hover:text-purple-400 transition duration-300"
-              aria-label="Twitter"
+              aria-label="X (formerly Twitter)"
             >
-              <FaTwitter size={24} /> Twitter
+              <FaX size={24} /> X
             </a>
             <a
-              href="https://www.linkedin.com/in/tech-assets-hub-48758b348/"
+              href="https://www.linkedin.com/in/tech-assets-hub-48758b348"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-100 hover:text-purple-400 transition duration-300"
@@ -73,7 +73,7 @@ const Footer = () => {
               <FaLinkedin size={24} /> LinkedIn
             </a>
             <a
-              href="https://www.instagram.com/tech_assets_hub_01/"
+              href="https://www.instagram.com/tech_assets_hub?igsh=MW9idHBpOGV4ZzZ4bQ=="
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-100 hover:text-purple-400 transition duration-300"

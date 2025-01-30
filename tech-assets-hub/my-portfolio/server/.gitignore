@@ -63,4 +63,4 @@ cypress/results/
 .storybook/
 
 # User uploads (if applicable)
-uploads/
+uploads/.env
