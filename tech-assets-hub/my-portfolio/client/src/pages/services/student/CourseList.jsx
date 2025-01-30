@@ -1,5 +1,5 @@
 
-
+// client/src/pages/services/student/CourseList.jsx
 // ------------------------Code Part 3---------------------------
 
 import React, { useState } from 'react';
