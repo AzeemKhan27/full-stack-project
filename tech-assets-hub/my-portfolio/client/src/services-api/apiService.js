@@ -6,21 +6,42 @@ const API_BASE_URL = import.meta.env.VITE_BASE_URL_API;
 
 const apiService = {
 
- // apiService.js
+  //privacy-policy
+  getPrivacyPolicy: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/privacy-policy`);
+      console.log("API_BASE_URL response : ", response ? undefined : response)
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching : getPrivacyPolicy :', error.message);
+      throw error;
+    }
+  },
 
-  // src/services-api/apiService.js
-updateRegistrationPayment: async (registrationId, paymentData) => {
-  try {
-    const response = await axios.patch(
-      `${API_BASE_URL}/api/register-for-english-practice/registrations/${registrationId}/payment`,
-      paymentData
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error updating payment status:', error);
-    throw error;
-  }
-},
+  //terms-of-service
+  getTermsOfService: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/terms-of-service/`);
+      console.log("API_BASE_URL : getTermsOfService : response : ", response ? undefined : response)
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching terms of service:', error);
+      throw error;
+    }
+  },
+
+  updateRegistrationPayment: async (registrationId, paymentData) => {
+    try {
+      const response = await axios.patch(
+        `${API_BASE_URL}/api/register-for-english-practice/registrations/${registrationId}/payment`,
+        paymentData
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error updating payment status:', error);
+      throw error;
+    }
+  },
   saveFormDataForEnglishPractitioners: async (data) => {
     try {
       const response = await axios.post(
