@@ -2,38 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* client/src/index.css */
-/* Payment Page Css */
-
-/* body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  } */
-
-  /* body {
-    background: linear-gradient(135deg, #f4f4f4 25%, #e0e0e0 25%, #e0e0e0 50%, #f4f4f4 50%, #f4f4f4 75%, #e0e0e0 75%, #e0e0e0);
-    background-size: 150% 150%;
-    animation: background-animation;
-} */
-
-/* body {
-  background: linear-gradient(135deg, #f4f4f4 25%, #e0e0e0 25%, #e0e0e0 50%, #f4f4f4 50%, #f4f4f4 75%, #e0e0e0 75%, #e0e0e0);
-  background-size: 150% 150%;
-  animation: background-animation; 
-} */
-
-/* ------------- START - Background Screen ------------------ */
-/* body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, rgba(206, 72, 72, 0.8) 20%, rgba(233, 39, 39, 0.8) 30%, rgba(247, 247, 248, 0.8) 40%, rgba(147, 138, 216, 0.8) 50%, rgba(195, 186, 220, 0.8) 75%, rgba(167, 163, 219, 0.8) 75%, rgba(205, 95, 95, 0.8));
-  background-size: 150% 150%;
-  animation: gradient-animation 10s ease infinite; 
-} */
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
