@@ -12,13 +12,13 @@ const AboutOurFreelance = ({ title, message }) => {
       <div className="sm:flex items-center max-w-screen-xl mx-auto p-5">
         <div className="sm:w-1/2 p-10">
           <div className="image object-center text-center">
-            <img src="/sections/home-about-section.png" alt="Company Image" className="rounded-lg shadow-lg" />
+            <img src="/sections/home-about-section.gif" alt="Company Image" className="rounded-lg shadow-lg" />
           </div>
         </div>
         <div className="sm:w-1/2 p-5">
           <div className="text">
             <h2 className="my-4 font-bold text-3xl sm:text-4xl">
-              About <span className="text-indigo-600">{title}</span>
+              About <span className="text-blue-400">{title}</span>
             </h2>
             <p className="text-gray-700">
               {message}
