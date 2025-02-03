@@ -1,4 +1,9 @@
+
+// client/src/components/Header.jsx
+// ------------------------Header Component---------------------------
+
 import React, { useState, useEffect } from 'react';
+import './css/Header.css'; // Import custom CSS
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -44,7 +49,7 @@ const Header = () => {
       <header
         id="header"
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'font-bold bg-gradient-to-r from-blue-900 to-blue-300 text-blue-100 shadow-lg py-2' : 'bg-gray-100 text-black py-4'
+          isScrolled ? 'font-bold bg-gradient-to-r from-blue-900 to-blue-300 text-white shadow-lg py-2' : 'bg-gray-100 text-black py-4'
         }`}
       >
         <div className="container mx-auto px-5 flex justify-between items-center">
@@ -91,7 +96,7 @@ const Header = () => {
                 </a>
               </li>
               <li
-                className="relative"
+                className="relative group"
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
