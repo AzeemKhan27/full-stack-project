@@ -1,33 +1,32 @@
 /* Ensure the mobile menu links are visible */
 .md\:hidden .hover\:underline {
-    color: inherit;
-  }
-  
-  /* Ensure the mobile menu background is visible */
-  .md\:hidden .bg-white {
-    background-color: white;
-  }
-  
-  /* Ensure the mobile menu text is visible */
-  .md\:hidden .text-black {
-    color: black;
-  }
-  
-  /* Ensure the mobile menu hover effects are visible */
-  .md\:hidden .hover\:text-blue-600:hover {
-    color: #2563eb;
-  }
-  
-  /* Ensure the mobile menu dropdown is visible */
-  .md\:hidden .bg-gray-100 {
-    background-color: #f3f4f6;
-  }
-  
-  .md\:hidden .dark\:hover\:bg-blue-100:hover {
-    background-color: #ebf8ff;
-  }
-  
-  .md\:hidden .dark\:hover\:text-black:hover {
-    color: black;
-  }
-  
+  color: inherit;
+}
+
+/* Ensure the mobile menu background is visible */
+.md\:hidden .bg-white {
+  background-color: white;
+}
+
+/* Ensure the mobile menu text is visible */
+.md\:hidden .text-black {
+  color: black;
+}
+
+/* Ensure the mobile menu hover effects are visible */
+.md\:hidden .hover\:text-blue-600:hover {
+  color: #2563eb;
+}
+
+/* Ensure the mobile menu dropdown is visible */
+.md\:hidden .bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.md\:hidden .dark\:hover\:bg-blue-100:hover {
+  background-color: #ebf8ff;
+}
+
+.md\:hidden .dark\:hover\:text-black:hover {
+  color: black;
+}
