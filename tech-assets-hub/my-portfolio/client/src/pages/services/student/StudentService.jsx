@@ -18,7 +18,7 @@ const StudentService = () => {
   ];
 
   const courseCategories = [
-    { title: 'IT/CS', items: ['Web Development in MERN', 'Android App Development: Build Native Applications', 'React Native Development: Build Native Cross-Platform Mobile Apps', 'Python Training', 'DevOps', 'SEO/Digital Marketing', 'DSA', 'System Design'] },
+    { title: 'IT/CS', items: ['Web Development in MERN', 'Android App Development: Build Native Applications', 'React Native Development: Build Native Cross-Platform Mobile Apps', 'Full-Stack .NET Developer', 'Python Training', 'DevOps', 'SEO/Digital Marketing', 'DSA', 'System Design'] },
     { title: 'Professional Development', items: ['English Practice', 'BDE Sessions', 'Social Media Handling'] },
     { title: 'Other Skills', items: ['Upcoming'] },
   ];
