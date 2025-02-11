@@ -2,9 +2,26 @@
 
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+// import { google } from 'googleapis';
 import Submission from '../models/Submission.js'; // Import the Submission model
 dotenv.config();
 
+
+// const oAuth2Client = new google.auth.OAuth2(
+//   process.env.GOOGLE_CLIENT_ID,
+//   process.env.GOOGLE_CLIENT_SECRET,
+//   process.env.GOOGLE_REDIRECT_URI
+// );
+
+// oAuth2Client.setCredentials({
+//   refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+// });
+
+// // Function to get a new access token
+// const getAccessToken = async () => {
+//   const tokens = await oAuth2Client.refreshAccessToken();
+//   return tokens.credentials.access_token;
+// };
 // Reusable transporter
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -13,6 +30,23 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
+
+// const transporter = nodemailer.createTransport({
+//   service: 'Gmail',
+//   auth: {
+//     type: 'OAuth2',
+//     user: process.env.EMAIL_USER,
+//     clientId: process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//     refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+//     accessToken: await getAccessToken(),
+//   },
+// });
+// console.log("GOOGLE_CLIENT_ID =>", process.env.GOOGLE_CLIENT_ID)
+// console.log("GOOGLE_CLIENT_SECRET =>", process.env.GOOGLE_CLIENT_SECRET)
+// console.log("GOOGLE_REFRESH_TOKEN =>", process.env.GOOGLE_REFRESH_TOKEN)
+// console.log("GOOGLE_REDIRECT_URI =>", process.env.GOOGLE_REDIRECT_URI)
+// console.log('EMAIL_USER:', process.env.EMAIL_USER);
 
 ///////////////////// Client Notification /////////////////////////
 
